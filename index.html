@@ -1,0 +1,2749 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DISHA - DISHA ADVISORY PORTAL</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Rozha+One&family=Hind:wght@400;500;600;700&family=Noto+Sans+Bengali:wght@400;600;700&family=Noto+Sans+Tamil:wght@400;600;700&family=Noto+Sans+Devanagari:wght@400;600;700&family=Noto+Sans+Gujarati:wght@400;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+  <!-- Client-side PDF generation engine -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+  <style>
+    :root {
+      --c-paper: #F6F4EE;
+      --c-paper-sheet: #FFFFFF;
+      --c-indigo: #141B4D;
+      --c-indigo-light: #222C74;
+      --c-indigo-subtle: #EEF2FF;
+      --c-turmeric: #B45309;
+      --c-turmeric-bg: #FEF3C7;
+      --c-brick: #991B1B;
+      --c-brick-bg: #FEE2E2;
+      --c-green: #15803D;
+      --c-green-bg: #DCFCE7;
+      --c-border: #DDD6C8;
+      --c-border-strong: #A39986;
+      --c-text: #1C1917;
+      --c-muted: #57534E;
+      --font-serif: 'Rozha One', serif, Georgia;
+      --font-sans: 'Hind', 'Noto Sans Devanagari', 'Noto Sans Gujarati', 'Noto Sans Tamil', 'Noto Sans Bengali', sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      width: 100vw;
+      height: 100vh;
+      overflow-x: hidden;
+      overflow-y: auto;
+      background-color: var(--c-paper);
+      color: var(--c-text);
+      font-family: var(--font-sans);
+      font-size: 18px;
+      line-height: 1.5;
+    }
+
+    #desktop-shell {
+      width: 100vw;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      background: var(--c-paper-sheet);
+    }
+
+    header.desktop-header {
+      background: var(--c-indigo);
+      color: #fff;
+      padding: 16px 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 4px solid var(--c-turmeric);
+      width: 100%;
+    }
+    .brand-cluster {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .header-emblem {
+      font-size: 32px;
+    }
+    .header-title-group h1 {
+      font-family: var(--font-serif);
+      font-size: 26px;
+      line-height: 1.1;
+      font-weight: 400;
+      letter-spacing: 0.5px;
+    }
+    .header-title-group span {
+      font-size: 14px;
+      color: #CBD5E1;
+      font-weight: 500;
+    }
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .portal-badge {
+      background: rgba(255, 255, 255, 0.14);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      padding: 6px 12px;
+      border-radius: 4px;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+    }
+    .portal-badge.operator-active {
+      background: var(--c-turmeric);
+      border-color: #fff;
+      color: #fff;
+    }
+    .fs-toggle-btn {
+      background: #FFFFFF;
+      color: var(--c-indigo);
+      border: none;
+      padding: 8px 16px;
+      border-radius: 4px;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+    }
+    .fs-toggle-btn:hover { background: #EDEAE4; }
+
+    .lang-toggle-btn {
+      background: var(--c-turmeric);
+      color: #fff;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 4px;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .lang-toggle-btn:hover { background: #92400E; }
+
+    nav.desktop-nav-ribbon {
+      background: #FAF8F5;
+      border-bottom: 1px solid var(--c-border);
+      padding: 0 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 52px;
+      width: 100%;
+    }
+    .nav-links-cluster {
+      display: flex;
+      height: 100%;
+    }
+    .nav-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 0 22px;
+      color: var(--c-muted);
+      text-decoration: none;
+      font-size: 16px;
+      font-weight: 600;
+      border-bottom: 3px solid transparent;
+      transition: all 0.15s ease;
+    }
+    .nav-link:hover {
+      color: var(--c-indigo);
+      background: rgba(0,0,0,0.02);
+    }
+    .nav-link.active {
+      color: var(--c-indigo);
+      border-bottom-color: var(--c-indigo);
+      background: #FFFFFF;
+    }
+
+    .stepper-container {
+      background: #EAE6DF;
+      height: 6px;
+      width: 100%;
+    }
+    .stepper-fill {
+      height: 100%;
+      background: var(--c-turmeric);
+      transition: width 0.25s ease-out;
+    }
+
+    main#screen-viewport {
+      flex: 1;
+      padding: 36px 60px;
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+    }
+
+    .desktop-page-head {
+      margin-bottom: 24px;
+      border-bottom: 1px solid #EFECE6;
+      padding-bottom: 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      width: 100%;
+    }
+    h2.page-title {
+      font-family: var(--font-serif);
+      font-size: 34px;
+      color: var(--c-indigo);
+      font-weight: 400;
+      line-height: 1.2;
+    }
+    p.page-sub {
+      font-size: 18.5px;
+      color: var(--c-muted);
+      margin-top: 4px;
+    }
+
+    .req-badge {
+      background: var(--c-brick);
+      color: #fff;
+      font-size: 12px;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 3px;
+      text-transform: uppercase;
+      margin-left: 8px;
+      vertical-align: middle;
+    }
+
+    .mode-indicator-chip {
+      background: #E0E7FF;
+      color: var(--c-indigo);
+      font-size: 13px;
+      font-weight: 700;
+      padding: 3px 10px;
+      border-radius: 12px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin-left: 10px;
+    }
+    .mode-indicator-chip.operator {
+      background: var(--c-turmeric-bg);
+      color: var(--c-turmeric);
+    }
+
+    .validation-alert {
+      background: var(--c-brick-bg);
+      border: 1.5px solid var(--c-brick);
+      color: var(--c-brick);
+      padding: 10px 16px;
+      border-radius: 4px;
+      font-weight: 600;
+      font-size: 15px;
+      margin-bottom: 16px;
+      display: none;
+      align-items: center;
+      gap: 8px;
+      animation: shake 0.3s ease-in-out;
+    }
+
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      20%, 60% { transform: translateX(-6px); }
+      40%, 80% { transform: translateX(6px); }
+    }
+
+    .grid-2col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 32px;
+      width: 100%;
+    }
+    .grid-3col {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      width: 100%;
+    }
+    .grid-4col {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 22px;
+      width: 100%;
+    }
+
+    .ledger-card {
+      border: 1.5px solid var(--c-border-strong);
+      padding: 28px;
+      background: #FFFFFF;
+      border-radius: 6px;
+      position: relative;
+      box-shadow: 4px 4px 0 rgba(20, 27, 77, 0.05);
+      width: 100%;
+    }
+    .ledger-card::before {
+      content: attr(data-seal);
+      position: absolute;
+      top: -11px;
+      left: 20px;
+      background: var(--c-indigo);
+      color: #fff;
+      font-size: 11.5px;
+      font-weight: 700;
+      letter-spacing: 0.8px;
+      padding: 2px 8px;
+      border-radius: 2px;
+    }
+
+    .btn-primary {
+      background: var(--c-indigo);
+      color: #fff;
+      font-size: 18px;
+      font-weight: 600;
+      border: 2px solid var(--c-indigo);
+      padding: 14px 28px;
+      border-radius: 6px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      transition: all 0.15s ease;
+      text-decoration: none;
+      box-shadow: 0 4px 0 var(--c-indigo-light);
+    }
+    .btn-primary:hover {
+      background: var(--c-indigo-light);
+      transform: translateY(-1px);
+    }
+    .btn-primary:active {
+      transform: translateY(2px);
+      box-shadow: 0 1px 0 var(--c-indigo-light);
+    }
+    .btn-secondary {
+      background: var(--c-paper);
+      color: var(--c-indigo);
+      border: 1.5px solid var(--c-border-strong);
+      font-size: 17px;
+      font-weight: 600;
+      padding: 13px 24px;
+      border-radius: 6px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      text-decoration: none;
+      transition: all 0.15s;
+    }
+    .btn-secondary:hover { background: #EBE5D9; }
+
+    .selection-tile {
+      border: 2px solid var(--c-border);
+      background: var(--c-paper);
+      padding: 24px 20px;
+      border-radius: 6px;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 130px;
+      transition: all 0.15s ease;
+    }
+    .selection-tile:hover {
+      border-color: var(--c-turmeric);
+      background: var(--c-turmeric-bg);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 14px rgba(0,0,0,0.06);
+    }
+    .selection-tile.selected {
+      border-color: var(--c-indigo);
+      background: var(--c-indigo-subtle);
+      box-shadow: 0 0 0 1.5px var(--c-indigo);
+    }
+
+    .input-wrap-desktop {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+    .text-input-lg {
+      flex: 1;
+      font-size: 20px;
+      padding: 12px 16px;
+      border: 2px solid var(--c-border-strong);
+      border-radius: 6px;
+      background: #fff;
+      font-family: var(--font-sans);
+    }
+    .text-input-lg:focus {
+      outline: none;
+      border-color: var(--c-indigo);
+    }
+    .text-input-lg.input-error {
+      border-color: var(--c-brick) !important;
+      background-color: #FFF5F5 !important;
+    }
+
+    .btn-mic-desktop {
+      background: #FFFFFF;
+      border: 2px solid var(--c-border-strong);
+      padding: 12px 20px;
+      border-radius: 6px;
+      font-size: 20px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 600;
+      color: var(--c-indigo);
+    }
+    .btn-mic-desktop.listening {
+      background: var(--c-brick-bg);
+      border-color: var(--c-brick);
+      color: var(--c-brick);
+      animation: pulse 1s infinite;
+    }
+
+    @keyframes pulse {
+      0% { opacity: 1; }
+      50% { opacity: 0.5; }
+      100% { opacity: 1; }
+    }
+
+    .desktop-voice-bar {
+      background: var(--c-turmeric-bg);
+      border: 1px solid var(--c-turmeric);
+      color: var(--c-turmeric);
+      font-size: 15px;
+      font-weight: 700;
+      padding: 8px 18px;
+      border-radius: 6px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .desktop-voice-bar:hover { background: #FDE68A; }
+
+    .trust-strip-desktop {
+      background: var(--c-green-bg);
+      border: 1.5px dashed var(--c-green);
+      color: var(--c-green);
+      font-size: 15px;
+      font-weight: 600;
+      padding: 14px 24px;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-top: 24px;
+    }
+
+    .ledger-table-desktop {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 14px;
+      font-size: 17px;
+    }
+    .ledger-table-desktop th, .ledger-table-desktop td {
+      border: 1px solid var(--c-border);
+      padding: 14px 20px;
+      text-align: left;
+    }
+    .ledger-table-desktop th {
+      background: #F1ECE3;
+      font-weight: 700;
+      color: var(--c-indigo);
+    }
+
+    .desktop-score-box {
+      display: flex;
+      align-items: center;
+      gap: 36px;
+      padding: 28px;
+      background: #FAF8F5;
+      border: 2px solid var(--c-border);
+      border-radius: 8px;
+      width: 100%;
+    }
+    .score-circle-lg {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      border: 8px solid var(--c-green);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 54px;
+      font-family: var(--font-serif);
+      font-weight: 700;
+      color: var(--c-green);
+      background: #fff;
+      flex-shrink: 0;
+    }
+
+    .chat-layout {
+      display: grid;
+      grid-template-columns: 360px 1fr;
+      gap: 28px;
+      height: 560px;
+      width: 100%;
+    }
+    .chat-sidebar {
+      background: #FAF8F5;
+      border: 1px solid var(--c-border);
+      padding: 20px;
+      border-radius: 6px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .chat-terminal {
+      display: flex;
+      flex-direction: column;
+      border: 1px solid var(--c-border);
+      border-radius: 6px;
+      background: #fff;
+      overflow: hidden;
+    }
+    .chat-stream-desktop {
+      flex: 1;
+      padding: 24px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      background: #FCFBF9;
+    }
+    .chat-bubble {
+      padding: 14px 20px;
+      border-radius: 8px;
+      font-size: 17px;
+      max-width: 80%;
+      line-height: 1.5;
+    }
+    .chat-bubble.bot {
+      background: #ECEFF1;
+      color: var(--c-text);
+      align-self: flex-start;
+      border-left: 4px solid var(--c-indigo);
+    }
+    .chat-bubble.user {
+      background: var(--c-indigo);
+      color: #fff;
+      align-self: flex-end;
+    }
+    .quick-chip {
+      background: #FFFFFF;
+      border: 1px solid var(--c-border-strong);
+      padding: 10px 14px;
+      border-radius: 6px;
+      font-size: 14.5px;
+      cursor: pointer;
+      font-weight: 600;
+      text-align: left;
+    }
+    .quick-chip:hover {
+      background: var(--c-turmeric-bg);
+      border-color: var(--c-turmeric);
+    }
+
+    /* Modal Styling for Scheme Deep-Dives */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(20, 27, 77, 0.7);
+      backdrop-filter: blur(4px);
+      z-index: 1000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 40px;
+    }
+    .modal-content {
+      background: #fff;
+      border: 2px solid var(--c-indigo);
+      border-radius: 8px;
+      max-width: 900px;
+      width: 100%;
+      max-height: 90vh;
+      overflow-y: auto;
+      padding: 36px;
+      box-shadow: 0 16px 40px rgba(0,0,0,0.25);
+      position: relative;
+    }
+    .modal-close-btn {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: #E2E8F0;
+      border: none;
+      border-radius: 50%;
+      width: 38px;
+      height: 38px;
+      font-size: 18px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+    }
+    .modal-close-btn:hover { background: #CBD5E1; }
+
+    /* Stat Box styling inside Modal */
+    .stats-matrix {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      background: #FAF8F5;
+      border: 1px solid var(--c-border);
+      border-radius: 6px;
+      padding: 14px;
+      margin: 16px 0;
+    }
+    .stat-item {
+      text-align: center;
+    }
+    .stat-val {
+      font-family: var(--font-serif);
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--c-indigo);
+    }
+    .stat-lbl {
+      font-size: 12px;
+      color: var(--c-muted);
+      margin-top: 2px;
+      text-transform: uppercase;
+      font-weight: 600;
+    }
+
+    /* Assisted Desk Custom Elements */
+    .operator-docket-box {
+      border: 2px dashed var(--c-indigo);
+      background: #F8FAFC;
+      padding: 16px;
+      margin-top: 20px;
+      border-radius: 4px;
+    }
+    .operator-signature-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin-top: 30px;
+      padding-top: 20px;
+      border-top: 1px solid var(--c-border-strong);
+    }
+    .signature-slot {
+      border: 1px dashed var(--c-border-strong);
+      height: 80px;
+      display: flex;
+      align-items: flex-end;
+      padding: 8px;
+      font-size: 13px;
+      color: var(--c-muted);
+      background: #fff;
+    }
+
+    @media print {
+      body { background: #fff; }
+      header, nav, .desktop-voice-bar, .btn-primary, .btn-secondary, .chat-sidebar, .lang-toggle-btn, .fs-toggle-btn, .header-actions { display: none !important; }
+      main#screen-viewport { padding: 0; }
+      .ledger-card { box-shadow: none; border: 1px solid #333; }
+    }
+  </style>
+</head>
+<body>
+
+<div id="desktop-shell">
+  <header class="desktop-header">
+    <div class="brand-cluster">
+      <span class="header-emblem">🇮🇳</span>
+      <div class="header-title-group">
+        <h1 id="hdr-title">DISHA - DISHA ADVISORY PORTAL</h1>
+        <span id="hdr-sub">Government Credit-Linked Business Advisory · Ministry of MSME / Jan Samarth Standards</span>
+      </div>
+    </div>
+    <div class="header-actions">
+      <span class="portal-badge" id="hdr-badge">ENTREPRENEUR PORTAL</span>
+      <button class="fs-toggle-btn" id="hdr-fs-btn" onclick="toggleFullScreen()">⛶ Fullscreen</button>
+      <button class="lang-toggle-btn" onclick="navigate('/language')">
+        🌐 <span id="current-lang-text">Language: English</span>
+      </button>
+    </div>
+  </header>
+
+  <nav class="desktop-nav-ribbon">
+    <div class="nav-links-cluster">
+      <a href="#/" class="nav-link" id="dnav-home">Home</a>
+      <a href="#/schemes" class="nav-link" id="dnav-schemes">Schemes Repository</a>
+      <a href="#/ask-disha" class="nav-link" id="dnav-disha">Ask Disha</a>
+      <a href="#/nearest-branch" class="nav-link" id="dnav-branch">Lead Bank & CSC Locator</a>
+      <a href="#/simulator" class="nav-link" id="dnav-sim">Loan Simulator</a>
+    </div>
+  </nav>
+
+  <div class="stepper-container" id="stepper-container" style="display: none;">
+    <div class="stepper-fill" id="stepper-fill" style="width: 0%;"></div>
+  </div>
+
+  <main id="screen-viewport"></main>
+</div>
+
+<!-- MODAL POPUP FOR SCHEME BRIEF & STATISTICS -->
+<div id="scheme-modal" class="modal-overlay" onclick="closeSchemeModal(event)">
+  <div class="modal-content" onclick="event.stopPropagation()">
+    <button class="modal-close-btn" onclick="closeSchemeModal()">✕</button>
+    <div id="modal-scheme-body"></div>
+  </div>
+</div>
+
+<script>
+/**
+ * 6-LANGUAGE LOCALIZATION ENGINE (WITH NATIVE DICTIONARIES)
+ */
+const DICT = {
+  en: {
+    portalTitle: "DISHA - DISHA ADVISORY PORTAL",
+    portalSub: "Government Credit-Linked Business Advisory · Ministry of MSME / Jan Samarth Standards",
+    portalBadgeSelf: "ENTREPRENEUR PORTAL",
+    portalBadgeAssisted: "OFFICIAL OPERATOR DESK (CSC/VLE)",
+    fsBtn: "⛶ Fullscreen",
+    langName: "English",
+    navHome: "Home",
+    navSchemes: "Schemes Repository",
+    navDisha: "Ask Disha",
+    navBranch: "Lead Bank & CSC Locator",
+    navSim: "Loan Simulator",
+    readAloud: "🔊 Read Aloud",
+    requiredBadge: "REQUIRED",
+    sealText: "GOVT CREDIT LINKED ADVISORY",
+    homeTitle: "DISHA - DISHA ADVISORY PORTAL",
+    homeSub: "Evaluate the ground viability of your micro-enterprise in your specific postal block, and instantly map your capital to verified Central & State credit-linked subsidy schemes.",
+    startBtn: "Start Business Feasibility Assessment →",
+    browseSchemesBtn: "Browse Scheme Master Data & Statistics",
+    trustHome: "✓ Grounded in Jan Samarth, KVIC PMEGP 2026, and RBI Concessional Priority Sector Lending Norms.",
+    whoTitle: "Who is filling this application?",
+    whoSub: "Select mode to calibrate data density, verification steps, and legal certification dockets.",
+    forMyself: "🙋‍♂️ For Myself (Entrepreneur)",
+    forMyselfDesc: "Aspiring or existing micro-entrepreneur. Plain language, guided explanations, focused on borrower rights and personal viability.",
+    proceedEntrepreneur: "Proceed as Entrepreneur →",
+    assistedDesk: "🏢 Assisted Desk (CSC / Bank Mitra)",
+    assistedDeskDesc: "VLE Operator, Banking Correspondent, or Kiosk Manager. High-density data entry, applicant verification tracking, and official stamp dockets.",
+    proceedOperator: "Open Operator Terminal →",
+    catTitle: "Select Social / Beneficiary Category",
+    catSub: "Government credit schemes offer direct capital subsidies (15% to 35%) and reduced margin requirements based on category.",
+    selectTier: "Select Tier ➔",
+    categories: {
+      Women: { label: "Women Entrepreneur (Women)", note: "Eligible for Stand-Up India & 35% PMEGP rural subsidy (5% Margin)" },
+      SC: { label: "Scheduled Caste (SC)", note: "Eligible for NSFDC concessional lending, Stand-Up India & 35% subsidy" },
+      ST: { label: "Scheduled Tribe (ST)", note: "Eligible for NSTFDC priority allocations, Stand-Up India & 35% subsidy" },
+      OBC: { label: "Other Backward Class (OBC)", note: "Eligible for NBCFDC term credit & 35% PMEGP rural subsidy" },
+      General: { label: "General Category (GEN)", note: "Full access to PMMY Mudra & standard 10% margin PMEGP tiers" },
+      Minority: { label: "Minority Community (Minority)", note: "NMDFC micro-credit facility & 35% PMEGP rural subsidy" },
+      PwD: { label: "Person with Disability (PwD / Divyangjan)", note: "NHFDC 5% concessional credit & 35% PMEGP rural subsidy" }
+    },
+    locTitle: "Where is the enterprise located?",
+    locSubSelf: "Subsidies depend on whether your location is classified as Rural or Urban.",
+    locSubAssisted: "Operator Entry: Validate applicant's residential jurisdiction against verified postal records.",
+    pinLabel: "6-Digit Postal PIN Code (Primary)",
+    villageLabel: "Village / Block / Tehsil Name (Required)",
+    applicantNameLabel: "Applicant / Beneficiary Full Name",
+    operatorCodeLabel: "Kiosk / CSC Operator ID Code",
+    voicePinBtn: "🎙️ Voice PIN",
+    pinAlert: "Please enter a valid 6-digit Indian PIN code.",
+    villageAlert: "Please enter your Village / Block / Tehsil name to proceed.",
+    bothLocAlert: "Both 6-digit PIN code and Village/Block name are required to proceed.",
+    nameAlert: "Applicant Full Name is required in Assisted Operator Desk mode.",
+    operatorAlert: "Operator ID code is required for kiosk authentication.",
+    pinMatchTitle: "GOVERNMENT PIN DIRECTORY MATCH",
+    pinClassNote: "District classifications link to KVIC margin rules: Rural locations receive up to 35% subsidy, while Urban centres qualify for 25%.",
+    pinTrust: "✓ Sourced from All India Pincode Directory (data.gov.in)",
+    confirmDistrictBtn: "Confirm District & Continue →",
+    capTitle: "Available Margin Capital",
+    capSubSelf: "How much money can you invest from your own personal savings?",
+    capSubAssisted: "Recorded promoter contribution deposited in escrow account.",
+    capLabel: "PROMOTER EQUITY INVESTMENT (MARGIN MONEY)",
+    capAlert: "Please enter an investment amount greater than zero.",
+    confirmCapBtn: "Confirm Capital & Select Sector →",
+    capCapacityTitle: "PROJECT FINANCING CAPACITY",
+    maxSupportedSize: "Maximum Supported Project Size:",
+    estBankLoan: "Estimated Bank Loan Component:",
+    capTrust: "✓ Uses RBI and KVIC Category-calibrated promoter equity norms",
+    secTitle: "Select Business Sector",
+    secSub: "Click on a category to instantly compute district viability and scheme eligibility.",
+    assessViability: "Assess Viability ➔",
+    sectors: {
+      Dairy: { label: "Dairy & Livestock (डेयरी)", desc: "Milk chillers, cattle purchase, fodder units, BMC setups" },
+      Retail: { label: "Kirana / Retail Shop (किराना)", desc: "Provisions, grocery inventory, POS setup, FMCG stock" },
+      FoodProcessing: { label: "Food Processing (खाद्य प्रसंस्करण)", desc: "Flour mills, mustard/groundnut oil extraction, pulse packaging" },
+      Tailoring: { label: "Tailoring & Garments (सिलाई)", desc: "Industrial stitching machines, apparel job work units" },
+      Poultry: { label: "Poultry Farming (पोल्ट्री)", desc: "Broiler/layer sheds, automated feed machinery, poultry infra" },
+      Textiles: { label: "Weaving & Handloom (हथकरघा)", desc: "Semi-automatic powerlooms, yarn stock, dyeing facilities" },
+      Handicrafts: { label: "Artisans & Pottery (हस्तशिल्प)", desc: "Terracotta kilns, woodcraft carving, traditional brassware" },
+      Services: { label: "Technical Repair & Fabrication (मरम्मत)", desc: "Agro-machinery servicing, arc welding, solar pump repairs" }
+    },
+    scoreTitle: "Enterprise Feasibility Score",
+    scoreSub: (b, d, p) => `Grounded evaluation for ${b} in ${d} (${p})`,
+    scoreVerdict: (d) => `Strong Potential in ${d}`,
+    scoreDesc: "Evaluated against consumer cluster density within a 5km radius, APMC raw material linkages, and Lead Bank District Credit Plan priority allocations.",
+    marketBtn: "Market & Opportunity Analysis →",
+    jumpLoanBtn: "Jump to Official Loan Plan",
+    planTitle: "Government Credit-Linked Loan Plan",
+    planSub: (c, d) => `State-aware routing for ${c} entrepreneur in ${d}`,
+    bestFitTag: "BEST-FIT SCHEME DETERMINATION",
+    totProjectSize: "Total Project Size",
+    yourEquity: "Promoter Contribution",
+    eligibleCredit: "Eligible Bank Credit",
+    govtSubsidyGrant: "Government Subsidy Grant",
+    interestRateLabel: "Benchmark Interest Rate",
+    moratoriumLabel: "Moratorium Period",
+    repaymentBtn: "Repayment Schedule →",
+    simulateBtn: "Simulate Other Amounts",
+    branchTitle: "Lead District Bank & CSC Network",
+    branchSub: (d, p) => `Verified application touchpoints in ${d} (${p})`,
+    genDossierBtnSelf: "Download Business Plan Dossier →",
+    genDossierBtnAssisted: "Generate Verified Kiosk Docket & Stamp →",
+    reportTitleSelf: "Printable Business Advisory Dossier",
+    reportTitleAssisted: "Official Operator Verification Docket",
+    reportSubSelf: "Export or print your standardized business advisory and credit summary.",
+    reportSubAssisted: "Statutory filing report for forwarding to Lead District Bank Credit Officer.",
+    downloadPdfBtn: "📥 Download as PDF",
+    printBtn: "🖨️ Print Dossier",
+    whatsAppBtn: "💬 Send to WhatsApp",
+    chatTitle: "Ask Disha — Grounded AI Advisory Terminal",
+    chatSub: "Grounded in active session parameters and official Jan Samarth norms.",
+    chatPlaceholder: "Ask about schemes, subsidies, interest rates, or your report...",
+    chatSend: "Send ➔",
+    chatDisclaimer: "⚠️ Disha provides advisory calculations. Final loan sanctions are approved solely by your lending bank officer."
+  },
+  hi: {
+    portalTitle: "दिशा - DISHA ADVISORY PORTAL",
+    portalSub: "सरकारी ऋण-संबद्ध व्यापार सलाहकार पोर्टल · सूक्ष्म, लघु और मध्यम उद्यम मंत्रालय",
+    portalBadgeSelf: "उद्यमी पोर्टल",
+    portalBadgeAssisted: "आधिकारिक ऑपरेटर डेस्क (CSC/VLE)",
+    fsBtn: "⛶ फुलस्क्रीन",
+    langName: "हिंदी (Hindi)",
+    navHome: "मुख्य पृष्ठ",
+    navSchemes: "योजना सूची एवं आंकड़े",
+    navDisha: "दिशा से पूछें",
+    navBranch: "लीड बैंक एवं CSC केंद्र",
+    navSim: "ऋण सिमुलेटर",
+    readAloud: "🔊 बोलकर सुनें",
+    requiredBadge: "अनिवार्य",
+    sealText: "सरकारी ऋण लिंक्ड परामर्श",
+    homeTitle: "दिशा - DISHA ADVISORY PORTAL",
+    homeSub: "अपने पिन कोड क्षेत्र में अपने सूक्ष्म व्यवसाय की वास्तविक सफलता की जांच करें और सीधे सरकारी सब्सिडी युक्त ऋण योजनाओं से जुड़ें।",
+    startBtn: "व्यवसाय व्यवहार्यता जांचें →",
+    browseSchemesBtn: "सभी योजनाएं और आंकड़े देखें",
+    trustHome: "✓ जन समर्थ पोर्टल, KVIC PMEGP और भारतीय रिजर्व बैंक के प्राथमिक क्षेत्र ऋण नियमों पर आधारित।",
+    whoTitle: "यह आवेदन कौन भर रहा है?",
+    whoSub: "प्रारूप, डेटा घनत्व और सत्यापन प्रक्रियाओं को अनुकूलित करने के लिए मोड चुनें।",
+    forMyself: "🙋‍♂️ स्वयं के लिए (उद्यमी)",
+    forMyselfDesc: "सरल भाषा, निर्देशित मार्गदर्शन, व्यक्तिगत सफलता और ऋणी अधिकारों पर केंद्रित।",
+    proceedEntrepreneur: "उद्यमी के रूप में आगे बढ़ें →",
+    assistedDesk: "🏢 सहायता केंद्र (CSC / बैंक मित्र)",
+    assistedDeskDesc: "ग्राम स्तर उद्यमी (VLE) या बैंक मित्र। सघन डेटा प्रविष्टि, आवेदक सत्यापन और आधिकारिक सील प्रपत्र।",
+    proceedOperator: "ऑपरेटर टर्मिनल खोलें →",
+    catTitle: "सामाजिक / लाभार्थी श्रेणी चुनें",
+    catSub: "सरकारी ऋण योजनाओं में श्रेणी के आधार पर 15% से 35% तक सीधी पूंजी सब्सिडी और कम मार्जिन मनी मिलती है।",
+    selectTier: "श्रेणी चुनें ➔",
+    categories: {
+      Women: { label: "महिला उद्यमी (Women)", note: "स्टैंड-अप इंडिया और 35% PMEGP ग्रामीण सब्सिडी के लिए पात्र" },
+      SC: { label: "अनुसूचित जाति (SC)", note: "NSFDC रियायती ऋण और उच्चतम सब्सिडी के लिए पात्र" },
+      ST: { label: "अनुसूचित जनजाति (ST)", note: "NSTFDC प्राथमिकता आवंटन के लिए पात्र" },
+      OBC: { label: "अन्य पिछड़ा वर्ग (OBC)", note: "NBCFDC रियायती मियादी ऋण के लिए पात्र" },
+      General: { label: "सामान्य वर्ग (General)", note: "PMMY मुद्रा और PMEGP मानक श्रेणियों का पूर्ण लाभ" },
+      Minority: { label: "अल्पसंख्यक समुदाय (Minority)", note: "NMDFC सूक्ष्म ऋण सुविधा के लिए पात्र" },
+      PwD: { label: "दिव्यांगजन (PwD / Divyangjan)", note: "NHFDC 5% रियायती ऋण लाभ के लिए पात्र" }
+    },
+    locTitle: "उद्यम कहाँ स्थित है?",
+    locSubSelf: "सब्सिडी और बैंक कोटा इस बात पर निर्भर करता है कि आपका क्षेत्र ग्रामीण है या शहरी।",
+    locSubAssisted: "ऑपरेटर प्रविष्टि: सत्यापित रिकॉर्ड के अनुसार आवेदक के अधिकार क्षेत्र की पुष्टि करें।",
+    pinLabel: "6-अंकों का पिन कोड (अनिवार्य)",
+    villageLabel: "गाँव / ब्लॉक / तहसील का नाम (अनिवार्य)",
+    applicantNameLabel: "आवेदक / लाभार्थी का पूरा नाम",
+    operatorCodeLabel: "CSC ऑपरेटर / कियोस्क कोड",
+    voicePinBtn: "🎙️ पिन बोलें",
+    pinAlert: "कृपया 6 अंकों का मान्य पिन कोड दर्ज करें।",
+    villageAlert: "आगे बढ़ने के लिए कृपया अपने गाँव/ब्लॉक/तहसील का नाम दर्ज करें।",
+    bothLocAlert: "आगे बढ़ने के लिए 6-अंकों का पिन कोड और गाँव/ब्लॉक दोनों अनिवार्य हैं।",
+    nameAlert: "सहायता केंद्र मोड में आवेदक का पूरा नाम अनिवार्य है।",
+    operatorAlert: "कियोस्क प्रमाणीकरण के लिए ऑपरेटर आईडी आवश्यक है।",
+    pinMatchTitle: "सरकारी डाक निर्देशिका रिकॉर्ड",
+    pinClassNote: "जिले का वर्गीकरण KVIC नियमों से जुड़ा है: ग्रामीण क्षेत्रों को 35% तक सब्सिडी मिलती है, जबकि शहरी क्षेत्रों को 25%।",
+    pinTrust: "✓ अखिल भारतीय पिन कोड निर्देशिका (data.gov.in) से सत्यापित",
+    confirmDistrictBtn: "स्थान की पुष्टि करें और आगे बढ़ें →",
+    capTitle: "उपलब्ध पूंजी (मार्जिन मनी)",
+    capSubSelf: "आप अपनी बचत से कितना निवेश कर सकते हैं?",
+    capSubAssisted: "एस्क्रो खाते में जमा प्रमोटर इक्विटी का विवरण दर्ज करें।",
+    capLabel: "प्रमोटर स्वयं का निवेश (मार्जिन मनी)",
+    capAlert: "कृपया शून्य से अधिक निवेश राशि दर्ज करें।",
+    confirmCapBtn: "पूंजी की पुष्टि करें और क्षेत्र चुनें →",
+    capCapacityTitle: "परियोजना वित्तपोषण क्षमता",
+    maxSupportedSize: "अधिकतम समर्थित परियोजना आकार:",
+    estBankLoan: "अनुमानित बैंक ऋण राशि:",
+    capTrust: "✓ MSME ऋण के लिए RBI और KVIC प्रमोटर योगदान नियमों पर आधारित",
+    secTitle: "व्यवसाय क्षेत्र का चयन करें",
+    secSub: "जिले की मांग और ऋण पात्रता की तुरंत गणना के लिए किसी एक श्रेणी पर क्लिक करें।",
+    assessViability: "व्यवहार्यता देखें ➔",
+    sectors: {
+      Dairy: { label: "डेयरी एवं पशुपालन (Dairy)", desc: "दूध चिलर, पशु खरीद, चारा मशीन" },
+      Retail: { label: "किराना दुकान (Kirana/Retail)", desc: "दुकान सामग्री, इन्वेंट्री, POS सेटअप" },
+      FoodProcessing: { label: "खाद्य प्रसंस्करण (Food Proc.)", desc: "आटा चक्की, तेल निष्कर्षण, मसाला पैकेजिंग" },
+      Tailoring: { label: "सिलाई एवं परिधान (Tailoring)", desc: "औद्योगिक सिलाई मशीन, कपड़ा निर्माण" },
+      Poultry: { label: "पोल्ट्री फार्मिंग (Poultry)", desc: "शेड निर्माण, दाना मशीन" },
+      Textiles: { label: "बुनाई एवं हथकरघा (Handloom)", desc: "पावरलूम, धागा स्टॉक, रंगाई" },
+      Handicrafts: { label: "कारीगर एवं हस्तशिल्प (Artisans)", desc: "टेराकोटा, काष्ठकला, स्थानीय शिल्प" },
+      Services: { label: "तकनीकी मरम्मत (Services)", desc: "इलेक्ट्रिकल रिपेयर, वेल्डिंग वर्कशॉप" }
+    },
+    scoreTitle: "व्यवसाय व्यवहार्यता स्कोर",
+    scoreSub: (b, d, p) => `${d} (${p}) में ${b} के लिए वास्तविक मूल्यांकन`,
+    scoreVerdict: (d) => `${d} में सफलता की प्रबल संभावना`,
+    scoreDesc: "उपभोक्ता मांग, APMC मंडी और जिला ऋण योजना के आधार पर गणना की गई।",
+    marketBtn: "विस्तृत बाज़ार और अवसर विश्लेषण →",
+    jumpLoanBtn: "सीधे आधिकारिक ऋण योजना पर जाएं",
+    planTitle: "आपकी सरकारी ऋण योजना",
+    planSub: (c, d) => `${d} में ${c} उद्यमी के लिए राज्य-संबद्ध योजना`,
+    bestFitTag: "आपके लिए सर्वोत्तम योजना",
+    totProjectSize: "कुल परियोजना लागत",
+    yourEquity: "प्रमोटर योगदान",
+    eligibleCredit: "पात्र बैंक ऋण",
+    govtSubsidyGrant: "सरकारी सब्सिडी अनुदान",
+    interestRateLabel: "मानक ब्याज दर",
+    moratoriumLabel: "मोराटोरियम (किस्त छूट) अवधि",
+    repaymentBtn: "पुनर्भुगतान अनुसूची देखें →",
+    simulateBtn: "अन्य राशि का परीक्षण करें",
+    branchTitle: "लीड जिला बैंक एवं CSC केंद्र",
+    branchSub: (d, p) => `${d} (${p}) में सत्यापित सरकारी आवेदन केंद्र`,
+    genDossierBtnSelf: "PDF डाउनलोड करें / प्रिंट करें →",
+    genDossierBtnAssisted: "सत्यापित कियोस्क डॉकेट व मुहर बनाएं →",
+    reportTitleSelf: "मुद्रण योग्य व्यवसाय रिपोर्ट",
+    reportTitleAssisted: "आधिकारिक ऑपरेटर सत्यापन डॉकेट",
+    reportSubSelf: "अपनी मानकीकृत व्यापार सलाह और ऋण सारांश को डाउनलोड या प्रिंट करें।",
+    reportSubAssisted: "लीड बैंक अधिकारी को अग्रेषित करने हेतु आधिकारिक प्रपत्र।",
+    downloadPdfBtn: "📥 PDF डाउनलोड करें",
+    printBtn: "🖨️ प्रिंट करें",
+    whatsAppBtn: "💬 व्हाट्सएप पर भेजें",
+    chatTitle: "दिशा से पूछें — AI व्यापार सलाहकार",
+    chatSub: "सक्रिय सत्र विवरण और जन समर्थ मानकों पर आधारित।",
+    chatPlaceholder: "योजना, सब्सिडी, ब्याज दर या अपनी रिपोर्ट के बारे में पूछें...",
+    chatSend: "भेजें ➔",
+    chatDisclaimer: "⚠️ दिशा केवल सलाहकार गणना प्रदान करती है। अंतिम ऋण स्वीकृति का अधिकार केवल बैंक प्रबंधक के पास है।"
+  },
+  gu: {
+    portalTitle: "દિશા - DISHA ADVISORY PORTAL",
+    portalSub: "સરકારી ક્રેડિટ-લિંક્ડ બિઝનેસ સલાહકાર · MSME મંત્રાલય",
+    portalBadgeSelf: "ઉદ્યોગસાહસિક પોર્ટલ",
+    portalBadgeAssisted: "સત્તાવાર ઓપરેટર ડેસ્ક (CSC/VLE)",
+    fsBtn: "⛶ ફુલસ્ક્રીન",
+    langName: "ગુજરાતી (Gujarati)",
+    navHome: "મુખ્ય પૃષ્ઠ",
+    navSchemes: "યોજના સંગ્રહ અને આંકડા",
+    navDisha: "દિશાને પૂછો",
+    navBranch: "લીડ બેંક અને CSC કેન્દ્ર",
+    navSim: "લોન સિમ્યુલેટર",
+    readAloud: "🔊 સાંભળો",
+    requiredBadge: "ફરજિયાત",
+    sealText: "સરકારી ધિરાણ યોજના સલાહ",
+    homeTitle: "દિશા - DISHA ADVISORY PORTAL",
+    homeSub: "તમારા પિન કોડ વિસ્તારમાં તમારા વ્યવસાયની સફળતા તપાસો અને માન્ય સરકારી યોજનાઓમાંથી સબસિડી સાથે લોન મેળવો.",
+    startBtn: "વ્યવસાય ચકાસણી શરૂ કરો →",
+    browseSchemesBtn: "બધી યોજનાઓ અને આંકડા જુઓ",
+    trustHome: "✓ જન સમર્થ પોર્ટલ અને KVIC PMEGP ના નિયમો પર આધારિત.",
+    whoTitle: "આ ફોર્મ કોણ ભરી રહ્યું છે?",
+    whoSub: "આનાથી રિપોર્ટ અને પ્રક્રિયાની વિગતો નક્કી થશે.",
+    forMyself: "🙋‍♂️ મારા પોતાના માટે (ઉદ્યોગસાહસિક)",
+    forMyselfDesc: "હું મારા પોતાના નવા અથવા ચાલુ વ્યવસાય માટે લોન અને સહાય તપાસી રહ્યો છું.",
+    proceedEntrepreneur: "ઉદ્યોગસાહસિક તરીકે આગળ વધો →",
+    assistedDesk: "🏢 સહાય કેન્દ્ર (CSC / બેંક મિત્ર)",
+    assistedDeskDesc: "હું CSC ઓપરેટર અથવા બેંક મિત્ર છું અને અરજદાર માટે ફોર્મ ભરી રહ્યો છું.",
+    proceedOperator: "ઓપરેટર ટર્મિનલ ખોલો →",
+    catTitle: "તમારી સામાજિક કેટેગરી પસંદ કરો",
+    catSub: "સરકારી યોજનાઓમાં કેટેગરી મુજબ 15% થી 35% સુધીની સીધી સબસિડી મળે છે.",
+    selectTier: "પસંદ કરો ➔",
+    categories: {
+      Women: { label: "મહિલા ઉદ્યોગસાહસિક (Women)", note: "સ્ટેન્ડ-અપ ઇન્ડિયા અને 35% PMEGP ગ્રામીણ સબસિડી પાત્ર" },
+      SC: { label: "અનુસૂચિત જાતિ (SC)", note: "NSFDC રાહત દરે લોન અને સર્વોચ્ચ સબસિડી પાત્ર" },
+      ST: { label: "અનુસૂચિત જનજાતિ (ST)", note: "NSTFDC અગ્રતા ધિરાણ માટે પાત્ર" },
+      OBC: { label: "અન્ય પછાત વર્ગ (OBC)", note: "NBCFDC રાહત દરે ટર્મ લોન માટે પાત્ર" },
+      General: { label: "સામાન્ય કેટેગરી (General)", note: "PMMY મુદ્રા અને PMEGP માનક શ્રેણીનો લાભ" },
+      Minority: { label: "લઘુમતી સમુદાય (Minority)", note: "NMDFC માઇક્રો-ક્રેડિટ સુવિધા પાત્ર" },
+      PwD: { label: "દિવ્યાંગજન (PwD)", note: "NHFDC 5% રાહત દરે ક્રેડિટ લાભ" }
+    },
+    locTitle: "તમારો વ્યવસાય ક્યાં આવેલો છે?",
+    locSubSelf: "સબસિડી ગ્રામીણ કે શહેરી વિસ્તારના આધારે નક્કી થાય છે.",
+    locSubAssisted: "ઓપરેટર એન્ટ્રી: અરજદારના દસ્તાવેજો મુજબ સ્થાનિક વિસ્તાર ચકાસો.",
+    pinLabel: "6-અંકનો પિન કોડ (ફરજિયાત)",
+    villageLabel: "ગામ / બ્લોક / તાલુકાનું નામ (ફરજિયાત)",
+    applicantNameLabel: "અરજદારનું પૂરું નામ",
+    operatorCodeLabel: "CSC ઓપરેટર / કિઓસ્ક કોડ",
+    voicePinBtn: "🎙️ પિન બોલો",
+    pinAlert: "કૃપા કરીને માન્ય 6 અંકનો પિન કોડ દાખલ કરો.",
+    villageAlert: "આગળ વધવા માટે કૃપા કરીને તમારા ગામ/તાલુકાનું નામ લખો.",
+    bothLocAlert: "આગળ વધવા માટે 6-અંકનો પિન કોડ અને ગામ/તાલુકો બંને ફરજિયાત છે.",
+    nameAlert: "સહાય કેન્દ્ર મોડમાં અરજદારનું નામ ફરજિયાત છે.",
+    operatorAlert: "ઓપરેટર કોડ દાખલ કરવો જરૂરી છે.",
+    pinMatchTitle: "સરકારી પિન કોડ રેકોર્ડ",
+    pinClassNote: "ગ્રામીણ વિસ્તારોમાં 35% સુધી અને શહેરી વિસ્તારોમાં 25% સબસિડી મળે છે.",
+    pinTrust: "✓ ભારત સરકારની ડેટા ડિરેક્ટરી દ્વારા પ્રમાણિત",
+    confirmDistrictBtn: "જિલ્લો કન્ફર્મ કરો અને આગળ વધો →",
+    capTitle: "ઉપલબ્ધ મૂડી (માર્જિન મની)",
+    capSubSelf: "તમે તમારા પોતાના તરફથી કેટલું રોકાણ કરી શકો છો?",
+    capSubAssisted: "અરજદાર દ્વારા જમા કરાવેલ પ્રમોટર મૂડી રકમ.",
+    capLabel: "પોતાનું રોકાણ (માર્જિન મની)",
+    capAlert: "કૃપા કરીને શૂન્યથી વધુ રકમ દાખલ કરો.",
+    confirmCapBtn: "મૂડી કન્ફર્મ કરો અને ક્ષેત્ર પસંદ કરો →",
+    capCapacityTitle: "પ્રોજેક્ટ ક્ષમતા",
+    maxSupportedSize: "મહત્તમ પ્રોજેક્ટ કદ:",
+    estBankLoan: "અંદાજિત બેંક લોન:",
+    capTrust: "✓ રિઝર્વ બેંક અને કેવીઆઈસી નિયમો મુજબ ગણતરી",
+    secTitle: "વ્યવસાય ક્ષેત્ર પસંદ કરો",
+    secSub: "વિસ્તારની માંગ અને લોન પાત્રતા ગણવા માટે કોઈપણ ક્ષેત્ર પર ક્લિક કરો.",
+    assessViability: "ચકાસણી કરો ➔",
+    sectors: {
+      Dairy: { label: "ડેરી અને પશુપાલન (Dairy)", desc: "દૂધ ચિલર, પશુ ખરીદી, ઘાસચારો યુનિટ" },
+      Retail: { label: "કરિયાણા દુકાન (Kirana)", desc: "સામાન ઇન્વેન્ટરી, POS મશીન" },
+      FoodProcessing: { label: "ખાદ્ય પ્રસંસ્કરણ (Food Proc.)", desc: "લોટ દળવાની ઘંટી, તેલ મિલ, પેકેજિંગ" },
+      Tailoring: { label: "ટેલરિંગ અને ગારમેન્ટ (Tailoring)", desc: "ઔદ્યોગિક સિલાઈ મશીન, વસ્ત્રો" },
+      Poultry: { label: "પોલ્ટ્રી ફાર્મિંગ (Poultry)", desc: "શેડ બાંધકામ, ફીડ મશીનરી" },
+      Textiles: { label: "વણાટકામ અને હેન્ડલૂમ (Textiles)", desc: "પાવરલૂમ, યાર્ન સ્ટોક, ડાઇંગ" },
+      Handicrafts: { label: "કારીગરી અને હસ્તકલા (Artisans)", desc: "ટેરાકોટા, માટીકામ, લાકડાકામ" },
+      Services: { label: "રિપેરિંગ વર્કશોપ (Services)", desc: "ઇલેક્ટ્રિકલ રિપેર, વેલ્ડિંગ વર્ક" }
+    },
+    scoreTitle: "વ્યવસાય સંભાવના સ્કોર",
+    scoreSub: (b, d, p) => `${d} (${p}) માં ${b} માટે ગણતરી કરેલ સ્કોર`,
+    scoreVerdict: (d) => `${d} માં વ્યવસાય સફળ થવાની ઉત્તમ તક`,
+    scoreDesc: "સ્થાનિક માંગ, APMC બજાર અને જિલ્લા ઔદ્યોગિક નીતિના આધારે ગણતરી.",
+    marketBtn: "બજાર અને માંગ વિશ્લેષણ જુઓ →",
+    jumpLoanBtn: "સરકારી લોન પ્લાન પર જાઓ",
+    planTitle: "તમારો સરકારી લોન પ્લાન",
+    planSub: (c, d) => `${d} માં ${c} કેટેગરી માટે શ્રેષ્ઠ યોજના`,
+    bestFitTag: "તમારા માટે સૌથી અનુકૂળ યોજના",
+    totProjectSize: "કુલ પ્રોજેક્ટ ખર્ચ",
+    yourEquity: "પોતાનું રોકાણ",
+    eligibleCredit: "મળવાપાત્ર બેંક લોન",
+    govtSubsidyGrant: "સરકારી સબસિડી રકમ",
+    interestRateLabel: "અંદાજિત વ્યાજ દર",
+    moratoriumLabel: "મોરેટોરિયમ (હપ્તા મુક્તિ) સમય",
+    repaymentBtn: "હપ્તા પત્રક (રિપેમેન્ટ) જુઓ →",
+    simulateBtn: "બીજી રકમ અજમાવો",
+    branchTitle: "નજીકની બેંક અને CSC કેન્દ્ર",
+    branchSub: (d, p) => `${d} (${p}) માં આવેલ સહાય કેન્દ્રો`,
+    genDossierBtnSelf: "PDF ડાઉનલોડ કરો / પ્રિન્ટ કરો →",
+    genDossierBtnAssisted: "સત્તાવાર કિઓસ્ક ડોકેટ અને મહોર બનાવો →",
+    reportTitleSelf: "પ્રિન્ટ કરી શકાય તેવો રિપોર્ટ",
+    reportTitleAssisted: "સત્તાવાર ઓપરેટર વેરિફિકેશન ડોકેટ",
+    reportSubSelf: "તમારી ફાઇલ બેંકમાં રજૂ કરવા માટે ડાઉનલોડ કરો.",
+    reportSubAssisted: "લીડ બેંક ક્રેડિટ ઓફિસરને રજૂ કરવા માટે પ્રમાણિત ફાઇલ.",
+    downloadPdfBtn: "📥 PDF ડાઉનલોડ",
+    printBtn: "🖨️ પ્રિન્ટ કરો",
+    whatsAppBtn: "💬 વોટ્સએપ પર મોકલો",
+    chatTitle: "દિશા સાથે વાત કરો — AI સહાયક",
+    chatSub: "તમારા સત્ર અને જન સમર્થ પોર્ટલ મુજબ ત્વરિત ઉત્તરો.",
+    chatPlaceholder: "યોજના, સબસિડી, વ્યાજ કે દસ્તાવેજ વિશે પૂછો...",
+    chatSend: "મોકલો ➔",
+    chatDisclaimer: "⚠️ દિશા માત્ર સલાહકારી ગણતરી આપે છે. લોન મંજૂરીનો અંતિમ નિર્ણય બેંક મેનેજરનો રહેશે."
+  },
+  mr: {
+    portalTitle: "दिशा - DISHA ADVISORY PORTAL",
+    portalSub: "शासकीय पतपुरवठा व्यवसाय सल्लागार · सूक्ष्म, लघु व मध्यम उद्योग मंत्रालय",
+    portalBadgeSelf: "उद्योजक पोर्टल",
+    portalBadgeAssisted: "अधिकृत ऑपरेटर डेस्क (CSC/VLE)",
+    fsBtn: "⛶ फुलस्क्रीन",
+    langName: "मराठी (Marathi)",
+    navHome: "मुख्य पृष्ठ",
+    navSchemes: "योजना सूची आणि सांख्यिकी",
+    navDisha: "दिशाला विचारा",
+    navBranch: "लीड बँक आणि CSC केंद्र",
+    navSim: "कर्ज सिम्युलेटर",
+    readAloud: "🔊 ऐका",
+    requiredBadge: "आवश्यक",
+    sealText: "शासकीय कर्ज सल्लागार पत्र",
+    homeTitle: "दिशा - DISHA ADVISORY PORTAL",
+    homeSub: "आपल्या पिन कोड परिसरात आपल्या सूक्ष्म व्यवसायाची व्यवहार्यता तपासा आणि थेट शासकीय अनुदानासह कर्ज मिळवा.",
+    startBtn: "व्यवसाय व्यवहार्यता तपासा →",
+    browseSchemesBtn: "सर्व योजना आणि आकडेवारी पहा",
+    trustHome: "✓ जन समर्थ पोर्टल आणि RBI च्या प्राधान्य क्षेत्र नियमांवर आधारित.",
+    whoTitle: "हा अर्ज कोण भरत आहे?",
+    whoSub: "डेटा घनता आणि कायदेशीर पडताळणी निश्चित करण्यासाठी मोड निवडा.",
+    forMyself: "🙋‍♂️ स्वतःसाठी (उद्योजक)",
+    forMyselfDesc: "सोपी भाषा, मार्गदर्शित माहिती, वैयक्तिक व्यवसाय यश आणि ऋणी अधिकारांवर भर.",
+    proceedEntrepreneur: "उद्योजक म्हणून पुढे जा →",
+    assistedDesk: "🏢 सहाय्य केंद्र (CSC / बँक मित्र)",
+    assistedDeskDesc: "CSC चालक किंवा बँक प्रतिनिधी. सविस्तर माहिती, अर्जदार पडताळणी व अधिकृत शिक्का.",
+    proceedOperator: "ऑपरेटर टर्मिनल उघडा →",
+    catTitle: "सामाजिक / लाभार्थी प्रवर्ग निवडा",
+    catSub: "शासकीय योजनांमध्ये प्रवर्गांनुसार 15% ते 35% थेट भांडवली अनुदान मिळते.",
+    selectTier: "निवडा ➔",
+    categories: {
+      Women: { label: "महिला उद्योजक (Women)", note: "स्टँड-अप इंडिया आणि 35% PMEGP ग्रामीण अनुदानासाठी पात्र" },
+      SC: { label: "अनुसूचित जाती (SC)", note: "NSFDC सवलतीचे कर्ज आणि सर्वोच्च अनुदानासाठी पात्र" },
+      ST: { label: "अनुसूचित जमाती (ST)", note: "NSTFDC प्राधान्य वाटपासाठी पात्र" },
+      OBC: { label: "इतर मागासवर्गीय (OBC)", note: "NBCFDC सवलतीच्या मुदत कर्जासाठी पात्र" },
+      General: { label: "खुला प्रवर्ग (General)", note: "PMMY मुद्रा आणि PMEGP सर्वसाधारण योजनांचा लाभ" },
+      Minority: { label: "अल्पसंख्याक समुदाय (Minority)", note: "NMDFC सूक्ष्म कर्ज सुविधेसाठी पात्र" },
+      PwD: { label: "दिव्यांग व्यक्ती (PwD)", note: "NHFDC 5% सवलतीचे कर्ज लाभासाठी पात्र" }
+    },
+    locTitle: "व्यवसाय कुठे स्थित आहे?",
+    locSubSelf: "अनुदान आणि बँक कोटा आपले क्षेत्र ग्रामीण आहे की शहरी यावर अवलंबून असतो.",
+    locSubAssisted: "ऑपरेटर नोंदणी: रहिवासी पुराव्यानुसार अर्जदाराचे कार्यक्षेत्र निश्चित करा.",
+    pinLabel: "६-अंकी पिन कोड (आवश्यक)",
+    villageLabel: "गाव / ब्लॉक / तालुक्याचे नाव (आवश्यक)",
+    applicantNameLabel: "अर्जदाराचे पूर्ण नाव",
+    operatorCodeLabel: "CSC ऑपरेटर / कियोस्क कोड",
+    voicePinBtn: "🎙️ पिन बोला",
+    pinAlert: "कृपया ६ अंकांचा योग्य पिन कोड टाका.",
+    villageAlert: "कृपया आपल्या गावाचे / तालुक्याचे नाव टाका.",
+    bothLocAlert: "पुढे जाण्यासाठी ६-अंकी पिन आणि गाव/तालुका दोन्ही आवश्यक आहेत.",
+    nameAlert: "ऑपरेटर मोडमध्ये अर्जदाराचे पूर्ण नाव आवश्यक आहे.",
+    operatorAlert: "ऑपरेटर आयडी कोड आवश्यक आहे.",
+    pinMatchTitle: "शासकीय पिन कोड नोंदणी",
+    pinClassNote: "ग्रामीण भागास ३५% तर शहरी भागास २५% अनुदान लागू होते.",
+    pinTrust: "✓ अखिल भारतीय पिन कोड निर्देशिका द्वारे प्रमाणित",
+    confirmDistrictBtn: "स्थान निश्चित करा आणि पुढे जा →",
+    capTitle: "उपलब्ध भांडवल (मार्जिन मनी)",
+    capSubSelf: "आपण स्वतः किती गुंतवणूक करू शकता?",
+    capSubAssisted: "अर्जदाराने गुंतवलेली अधिकृत प्रवर्तक भांडवल रक्कम.",
+    capLabel: "स्वतःची गुंतवणूक (मार्जिन मनी)",
+    capAlert: "कृपया शून्यापेक्षा जास्त रक्कम टाका.",
+    confirmCapBtn: "भांडवल निश्चित करा आणि क्षेत्र निवडा →",
+    capCapacityTitle: "प्रकल्प क्षमता",
+    maxSupportedSize: "कमाल प्रकल्प आकार:",
+    estBankLoan: "अंदाजे बँक कर्ज:",
+    capTrust: "✓ RBI व KVIC च्या प्रवर्तक योगदान नियमानुसार",
+    secTitle: "व्यवसाय क्षेत्राची निवड करा",
+    secSub: "जिल्ह्यातील मागणी आणि कर्ज पात्रता तपासण्यासाठी क्षेत्रावर क्लिक करा.",
+    assessViability: "व्यवहार्यता तपासा ➔",
+    sectors: {
+      Dairy: { label: "दुग्धव्यवसाय व पशुपालन (Dairy)", desc: "मिल्क चिलर, जनावरे खरेदी, चारा युनिट" },
+      Retail: { label: "किराणा दुकान (Kirana)", desc: "मालाचा साठा, इन्व्हेंटरी, POS मशीन" },
+      FoodProcessing: { label: "अन्न प्रक्रिया (Food Proc.)", desc: "चक्की, तेल गिरणी, पॅकेजिंग" },
+      Tailoring: { label: "शिलाई आणि कपडे (Tailoring)", desc: "औद्योगिक शिलाई मशीन, कापड तयार करणे" },
+      Poultry: { label: "कुक्कुटपालन (Poultry)", desc: "शेड उभारणी, खाद्य यंत्रसामग्री" },
+      Textiles: { label: "हातमाग व विणकाम (Textiles)", desc: "पॉवरलूम, सुताचा साठा, रंगकाम" },
+      Handicrafts: { label: "कुंभारकाम व कला (Artisans)", desc: "टेराकोटा, मूर्तिकला, लाकूडकाम" },
+      Services: { label: "दुरुस्ती वर्कशॉप (Services)", desc: "इलेक्ट्रिकल रिपेअर, वेल्डिंग वर्कशॉप" }
+    },
+    scoreTitle: "व्यवसाय व्यवहार्यता गुण",
+    scoreSub: (b, d, p) => `${d} (${p}) मध्ये ${b} साठीचे मूल्यांकन`,
+    scoreVerdict: (d) => `${d} मध्ये यशस्वी होण्याची उत्तम संधी`,
+    scoreDesc: "स्थानिक मागणी, बाजारपेठ आणि जिल्हा पतपुरवठा आराखड्यानुसार गणना.",
+    marketBtn: "सविस्तर बाजार विश्लेषण →",
+    jumpLoanBtn: "थेट कर्ज योजनेवर जा",
+    planTitle: "आपली शासकीय कर्ज योजना",
+    planSub: (c, d) => `${d} मधील ${c} प्रवर्गासाठी सर्वोत्तम योजना`,
+    bestFitTag: "सर्वात योग्य योजना",
+    totProjectSize: "एकूण प्रकल्प खर्च",
+    yourEquity: "प्रवर्तक भांडवल",
+    eligibleCredit: "पात्र बँक कर्ज",
+    govtSubsidyGrant: "शासकीय अनुदान रक्कम",
+    interestRateLabel: "अंदाजे व्याजदर",
+    moratoriumLabel: "सवलत (मोरेटोरियम) कालावधी",
+    repaymentBtn: "हप्ते फेड वेळापत्रक पहा →",
+    simulateBtn: "दुसऱ्या रकमेचे परीक्षण करा",
+    branchTitle: "लीड जिल्हा बँक आणि CSC केंद्र",
+    branchSub: (d, p) => `${d} (${p}) मधील अधिकृत मदत केंद्रे`,
+    genDossierBtnSelf: "PDF डाउनलोड / प्रिंट करा →",
+    genDossierBtnAssisted: "प्रमाणित कियोस्क डॉकेट व शिक्का तयार करा →",
+    reportTitleSelf: "छापण्यायोग्य व्यवसाय अहवाल",
+    reportTitleAssisted: "अधिकृत ऑपरेटर पडताळणी डॉकेट",
+    reportSubSelf: "आपला प्रकल्प अहवाल बँकेत सादर करण्यासाठी तयार आहे.",
+    reportSubAssisted: "लीड बँक अधिकाऱ्याकडे सादर करण्यासाठी अधिकृत डॉकेट.",
+    downloadPdfBtn: "📥 PDF डाउनलोड करा",
+    printBtn: "🖨️ प्रिंट करा",
+    whatsAppBtn: "💬 व्हॉट्सॲपवर पाठवा",
+    chatTitle: "दिशाला विचारा — AI सहाय्यक",
+    chatSub: "सत्रातील माहिती आणि जन समर्थ मानकांनुसार उत्तरे.",
+    chatPlaceholder: "योजना, अनुदान, व्याजदर किंवा अहवालाबद्दल विचारा...",
+    chatSend: "पाठवा ➔",
+    chatDisclaimer: "⚠️ दिशा केवळ सल्लागार मार्गदर्शन पुरवते. अंतिम मंजुरीचा निर्णय बँक व्यवस्थापकाचा असेल."
+  },
+  ta: {
+    portalTitle: "திஷா - DISHA ADVISORY PORTAL",
+    portalSub: "அரசு கடன்-இணைப்பு வணிக ஆலோசனை · குறு, சிறு மற்றும் நடுத்தர தொழில் அமைச்சகம்",
+    portalBadgeSelf: "தொழில்முனைவோர் தளம்",
+    portalBadgeAssisted: "அதிகாரப்பூர்வ ஆபரேட்டர் டெஸ்க் (CSC/VLE)",
+    fsBtn: "⛶ முழுத்திரை",
+    langName: "தமிழ் (Tamil)",
+    navHome: "முகப்பு",
+    navSchemes: "திட்டங்கள் மற்றும் புள்ளிவிவரங்கள்",
+    navDisha: "திஷாவிடம் கேளுங்கள்",
+    navBranch: "முன்னணி வங்கி மற்றும் CSC மையம்",
+    navSim: "கடன் கால்குலேட்டர்",
+    readAloud: "🔊 வாசிக்கவும்",
+    requiredBadge: "கட்டாயம்",
+    sealText: "அரசு கடன் ஆலோசனை சான்றிதழ்",
+    homeTitle: "திஷா - DISHA ADVISORY PORTAL",
+    homeSub: "உங்கள் அஞ்சல் குறியீட்டு பகுதியில் உங்கள் சிறு வணிகத்தின் வெற்றியை சரிபார்த்து, அரசு மானியத்துடன் கூடிய கடன்களை பெறுங்கள்.",
+    startBtn: "வணிக சாத்தியத்தை சோதிக்கவும் →",
+    browseSchemesBtn: "திட்டங்கள் மற்றும் புள்ளிவிவரங்களைக் காண்க",
+    trustHome: "✓ ஜன் சமர்த் மற்றும் ரிசர்வ் வங்கியின் முன்னுரிமை கடன் விதிகளின்படி உருவாக்கப்பட்டது.",
+    whoTitle: "இந்த விண்ணப்பத்தை யார் நிரப்புகிறார்கள்?",
+    whoSub: "தரவு வகை மற்றும் சரிபார்ப்பு முறையைத் தேர்ந்தெடுக்கவும்.",
+    forMyself: "🙋‍♂️ எனக்காக (தொழில்முனைவோர்)",
+    forMyselfDesc: "எளிய மொழி, வழிகாட்டப்பட்ட தகவல், கடன் வாங்குபவரின் உரிமைகளில் கவனம்.",
+    proceedEntrepreneur: "தொழில்முனைவோராக தொடரவும் →",
+    assistedDesk: "🏢 உதவி மையம் (CSC / வங்கி மித்ரா)",
+    assistedDeskDesc: "சேவை மைய ஆபரேட்டர் அல்லது வங்கி முகவர். ஆவண சரிபார்ப்பு மற்றும் அதிகாரப்பூர்வ முத்திரை அறிக்கை.",
+    proceedOperator: "ஆபரேட்டர் முனையம் திறக்கவும் →",
+    catTitle: "சமூகப் பிரிவைத் தேர்ந்தெடுக்கவும்",
+    catSub: "பிரிவின் அடிப்படையில் 15% முதல் 35% வரை நேரடி மானியங்கள் கிடைக்கும்.",
+    selectTier: "தேர்வு செய்க ➔",
+    categories: {
+      Women: { label: "பெண் தொழில்முனைவோர் (Women)", note: "35% PMEGP ஊரக மானியத்திற்கு தகுதியுடையவர்" },
+      SC: { label: "பட்டியலிடப்பட்ட சாதி (SC)", note: "NSFDC சலுகைக் கடன் மற்றும் அதிகபட்ச மானியம்" },
+      ST: { label: "பட்டியலிடப்பட்ட பழங்குடி (ST)", note: "NSTFDC முன்னுரிமை ஒதுக்கீட்டிற்கு தகுதியுடையவர்" },
+      OBC: { label: "இதர பிற்படுத்தப்பட்டோர் (OBC)", note: "NBCFDC சலுகை கால கடன்களுக்கு தகுதியுடையவர்" },
+      General: { label: "பொதுப் பிரிவு (General)", note: "PMMY முத்ரா மற்றும் PMEGP பொது திட்டங்களின் பலன்" },
+      Minority: { label: "சிறுபான்மையினர் (Minority)", note: "NMDFC குறுங்கடன் வசதிக்கு தகுதியுடையவர்" },
+      PwD: { label: "மாற்றுத்திறனாளி (PwD / Divyangjan)", note: "NHFDC 5% சலுகைக் கடன் பலன்கள்" }
+    },
+    locTitle: "தொழில் எங்கு அமைந்துள்ளது?",
+    locSubSelf: "மானியங்கள் கிராமப்புற அல்லது நகர்ப்புற வகைப்பாட்டைப் பொறுத்தது.",
+    locSubAssisted: "ஆபரேட்டர் பதிவு: சான்றிதழின் படி வட்டாரத்தை உறுதிப்படுத்தவும்.",
+    pinLabel: "6-இலக்க அஞ்சல் குறியீடு (PIN)",
+    villageLabel: "கிராமம் / வட்டார பெயர் (கட்டாயம்)",
+    applicantNameLabel: "விண்ணப்பதாரரின் முழுப் பெயர்",
+    operatorCodeLabel: "CSC ஆபரேட்டர் / மைய குறியீடு",
+    voicePinBtn: "🎙️ குரல் வழி PIN",
+    pinAlert: "சரியான 6-இலக்க அஞ்சல் குறியீட்டை உள்ளிடவும்.",
+    villageAlert: "கிராமம் அல்லது வட்டார பெயரை உள்ளிடவும்.",
+    bothLocAlert: "அஞ்சல் குறியீடு மற்றும் கிராமம் இரண்டுமே கட்டாயமாகும்.",
+    nameAlert: "விண்ணப்பதாரரின் முழுப் பெயர் கட்டாயமாகும்.",
+    operatorAlert: "ஆபரேட்டர் குறியீடு தேவைப்படுகிறது.",
+    pinMatchTitle: "அரசு அஞ்சல் குறியீடு பதிவு",
+    pinClassNote: "கிராமப்புற பகுதிகளுக்கு 35% வரையிலும் நகர்ப்புறத்திற்கு 25% வரையிலும் மானியம்.",
+    pinTrust: "✓ இந்திய அரசின் அஞ்சல் குறியீட்டு தரவுத்தள சரிபார்ப்பு",
+    confirmDistrictBtn: "இருப்பிடத்தை உறுதிசெய்து தொடரவும் →",
+    capTitle: "முதலீட்டு மூலதனம் (Margin Money)",
+    capSubSelf: "நீங்கள் எவ்வளவு தொகை சொந்தமாக முதலீடு செய்ய முடியும்?",
+    capSubAssisted: "விண்ணப்பதாரரால் செலுத்தப்பட்ட சொந்த பங்களிப்பு தொகை.",
+    capLabel: "சொந்த முதலீட்டுத் தொகை",
+    capAlert: "பூஜ்ஜியத்திற்கு மேல் முதலீட்டு தொகையை உள்ளிடவும்.",
+    confirmCapBtn: "தொகையை உறுதிசெய்து துறையைத் தேர்வு செய்க →",
+    capCapacityTitle: "திட்ட நிதி திறன்",
+    maxSupportedSize: "அதிகபட்ச திட்ட அளவு:",
+    estBankLoan: "மதிப்பிடப்பட்ட வங்கி கடன்:",
+    capTrust: "✓ ரிசர்வ் வங்கி மற்றும் KVIC வழிகாட்டுதல்களின்படி கணக்கீடு",
+    secTitle: "வணிகத் துறையைத் தேர்ந்தெடுக்கவும்",
+    secSub: "கடன் தகுதியை கணக்கிட ஒரு பிரிவைத் தேர்ந்தெடுக்கவும்.",
+    assessViability: "மதிப்பீடு செய்க ➔",
+    sectors: {
+      Dairy: { label: "பால்பண்ணை மற்றும் கால்நடை (Dairy)", desc: "பால் குளிரூட்டி, மாடுகள் வாங்குதல், தீவன பிரிவு" },
+      Retail: { label: "மளிகை கடை (Kirana / Retail)", desc: "பொருட்கள் இருப்பு, POS இயந்திர அமைப்பு" },
+      FoodProcessing: { label: "உணவு பதப்படுத்துதல் (Food Proc.)", desc: "அரைக்கும் ஆலை, எண்ணெய் பிழிதல், பேக்கிங்" },
+      Tailoring: { label: "தையல் மற்றும் ஆடை (Tailoring)", desc: "தொழில்துறை தையல் இயந்திரங்கள், ஆடைகள்" },
+      Poultry: { label: "கோழி வளர்ப்பு பண்ணை (Poultry)", desc: "கொட்டகை அமைப்பு, தீவன இயந்திரங்கள்" },
+      Textiles: { label: "நெசவு மற்றும் கைத்தறி (Handloom)", desc: "விசைத்தறி, நூல் இருப்பு, சாயமிடுதல்" },
+      Handicrafts: { label: "கைவினை கலைகள் (Artisans)", desc: "சுடுமண் கலை, மரவேலை, பாரம்பரிய கைவினை" },
+      Services: { label: "பழுதுபார்ப்பு பணிமனை (Services)", desc: "மின்சார பழுதுபார்ப்பு, பணிமனை" }
+    },
+    scoreTitle: "வணிக சாத்தியக்கூறு மதிப்பெண்",
+    scoreSub: (b, d, p) => `${d} (${p}) இல் ${b} க்கான கணக்கீடு`,
+    scoreVerdict: (d) => `${d} இல் வெற்றி பெற சிறந்த வாய்ப்பு`,
+    scoreDesc: "உள்ளூர் தேவை மற்றும் மாவட்ட கடன் திட்ட ஒதுக்கீடுகளின் படி கணக்கிடப்பட்டது.",
+    marketBtn: "சந்தை பகுப்பாய்வு →",
+    jumpLoanBtn: "கடன் திட்டத்திற்கு செல்லவும்",
+    planTitle: "அரசு கடன் திட்டம்",
+    planSub: (c, d) => `${d} இல் ${c} தொழில்முனைவோருக்கான திட்டம்`,
+    bestFitTag: "பரிந்துரைக்கப்பட்ட திட்டம்",
+    totProjectSize: "மொத்த திட்ட செலவு",
+    yourEquity: "சொந்த பங்களிப்பு",
+    eligibleCredit: "தகுதியான வங்கி கடன்",
+    govtSubsidyGrant: "அரசு மானியத் தொகை",
+    interestRateLabel: "மதிப்பிடப்பட்ட வட்டி விகிதம்",
+    moratoriumLabel: "தவணை விலக்கு காலம்",
+    repaymentBtn: "திருப்பிச் செலுத்தும் அட்டவணை →",
+    simulateBtn: "வேறு தொகையை சோதிக்கவும்",
+    branchTitle: "முன்னணி வங்கி & CSC மையம்",
+    branchSub: (d, p) => `${d} (${p}) இல் உள்ள அங்கீகரிக்கப்பட்ட மையங்கள்`,
+    genDossierBtnSelf: "PDF பதிவிறக்கம் / அச்சிடுக →",
+    genDossierBtnAssisted: "சரிபார்க்கப்பட்ட ஆவணத்தை உருவாக்கவும் →",
+    reportTitleSelf: "அச்சிடக்கூடிய வணிக அறிக்கை",
+    reportTitleAssisted: "அதிகாரப்பூர்வ ஆபரேட்டர் சரிபார்ப்பு ஆவணம்",
+    reportSubSelf: "வங்கி சமர்ப்பிப்பிற்கான நிலையான அறிக்கை.",
+    reportSubAssisted: "முன்னணி வங்கி மேலாளருக்கு அனுப்ப வேண்டிய அறிக்கை.",
+    downloadPdfBtn: "📥 PDF பதிவிறக்கு",
+    printBtn: "🖨️ அச்சிடுக",
+    whatsAppBtn: "💬 வாட்ஸ்அப்",
+    chatTitle: "திஷாவிடம் கேளுங்கள்",
+    chatSub: "ஜன் சமர்த் விதிமுறைகளின் அடிப்படையில் உடனடி வழிகாட்டுதல்.",
+    chatPlaceholder: "திட்டங்கள் அல்லது மானியம் பற்றி கேளுங்கள்...",
+    chatSend: "அனுப்புக ➔",
+    chatDisclaimer: "⚠️ திஷா வழிகாட்டுதல் கணக்கீடுகளை மட்டுமே வழங்குகிறது. இறுதி முடிவு வங்கியின் அதிகாரத்திற்கு உட்பட்டது."
+  },
+  bn: {
+    portalTitle: "দিশা - DISHA ADVISORY PORTAL",
+    portalSub: "সরকারি ঋণ-সংযুক্ত ব্যবসায়িক উপদেষ্টা পোর্টাল · ক্ষুদ্র, ছোট ও মাঝারি শিল্প মন্ত্রক",
+    portalBadgeSelf: "উদ্যোক্তা পোর্টাল",
+    portalBadgeAssisted: "অফিসিয়াল অপারেটর ডেস্ক (CSC/VLE)",
+    fsBtn: "⛶ ফুলস্ক্রিন",
+    langName: "বাংলা (Bengali)",
+    navHome: "মূল পাতা",
+    navSchemes: "প্রকল্পের তালিকা ও পরিসংখ্যান",
+    navDisha: "দিশাকে জিজ্ঞাসা করুন",
+    navBranch: "লিড ব্যাঙ্ক ও CSC কেন্দ্র",
+    navSim: "ঋণ সিমুলেটর",
+    readAloud: "🔊 শুনুন",
+    requiredBadge: "বাধ্যতামূলক",
+    sealText: "সরকারি ঋণ পরামর্শপত্র",
+    homeTitle: "দিশা - DISHA ADVISORY PORTAL",
+    homeSub: "আপনার পিন কোড এলাকায় আপনার ক্ষুদ্র ব্যবসার সফলতার সম্ভাবনা যাচাই করুন এবং সরাসরি সরকারি অনুদানযুক্ত ঋণ সহায়তা পান।",
+    startBtn: "ব্যবসার সম্ভাব্যতা যাচাই করুন →",
+    browseSchemesBtn: "সমস্ত প্রকল্প ও পরিসংখ্যান দেখুন",
+    trustHome: "✓ জন সমর্থ পোর্টাল এবং KVIC PMEGP নির্দেশিকা অনুসারে তৈরি।",
+    whoTitle: "এই আবেদনটি কে পূরণ করছেন?",
+    whoSub: "ডকুমেন্টেশন এবং তথ্যের ধরণ নির্ধারণ করতে মোড নির্বাচন করুন।",
+    forMyself: "🙋‍♂️ নিজের জন্য (উদ্যোক্তা)",
+    forMyselfDesc: "সহজ ভাষা, নির্দেশিত তথ্য, নিজস্ব সাফল্য ও ঋণগ্রহীতার অধিকারের ওপর জোর।",
+    proceedEntrepreneur: "উদ্যোক্তা হিসেবে এগিয়ে যান →",
+    assistedDesk: "🏢 সহায়তা কেন্দ্র (CSC / ব্যাঙ্ক মিত্র)",
+    assistedDeskDesc: "ডিজিটাল সেবা কেন্দ্র (VLE) বা ব্যাঙ্ক প্রতিনিধি। বিস্তারিত তথ্য ও সরকারি যাচাইকরণ ডকেট।",
+    proceedOperator: "অপারেটর টার্মিনাল খুলুন →",
+    catTitle: "সামাজিক শ্রেণি নির্বাচন করুন",
+    catSub: "শ্রেণি অনুসারে ১৫% থেকে ৩৫% পর্যন্ত সরাসরি মূলধন অনুদান পাওয়া যায়।",
+    selectTier: "নির্বাচন করুন ➔",
+    categories: {
+      Women: { label: "মহিলা উদ্যোক্তা (Women)", note: "৩৫% PMEGP গ্রামীণ ভর্তুকির যোগ্য" },
+      SC: { label: "তফসিলি জাতি (SC)", note: "NSFDC বিশেষ ঋণ এবং সর্বোচ্চ অনুদানের সুবিধা" },
+      ST: { label: "তফসিলি উপজাতি (ST)", note: "NSTFDC অগ্রাধিকার বরাদ্দের যোগ্য" },
+      OBC: { label: "অনগ্রসর শ্রেণি (OBC)", note: "NBCFDC বিশেষ মেয়াদি ঋণের সুবিধা" },
+      General: { label: "সাধারণ শ্রেণি (General)", note: "PMMY মুদ্রা এবং PMEGP সাধারণ সুবিধা" },
+      Minority: { label: "সংখ্যালঘু সম্প্রদায় (Minority)", note: "NMDFC ক্ষুদ্র ঋণ সুবিধার যোগ্য" },
+      PwD: { label: "প্রতিবন্ধী ব্যক্তি (PwD / Divyangjan)", note: "NHFDC ৫% বিশেষ ঋণ সুবিধার যোগ্য" }
+    },
+    locTitle: "ব্যবসাটি কোথায় অবস্থিত?",
+    locSubSelf: "ভর্তুকি এলাকাটি গ্রামীণ না শহুরে তার ওপর নির্ভর করে।",
+    locSubAssisted: "অপারেটর তথ্য: আবাসিক প্রমাণ অনুযায়ী এলাকা যাচাই করুন।",
+    pinLabel: "৬-সংখ্যার পিন কোড (PIN)",
+    villageLabel: "গ্রাম / ব্লক / থানার নাম (বাধ্যতামূলক)",
+    applicantNameLabel: "আবেদনকারীর পুরো নাম",
+    operatorCodeLabel: "CSC অপারেটর / কিয়স্ক কোড",
+    voicePinBtn: "🎙️ পিন বলুন",
+    pinAlert: "সঠিক ৬-সংখ্যার পিন কোড লিখুন।",
+    villageAlert: "গ্রাম বা ব্লকের নাম লিখুন।",
+    bothLocAlert: "পিন এবং গ্রাম/ব্লকের নাম উভয়ই বাধ্যতামূলক।",
+    nameAlert: "আবেদনকারীর পুরো নাম দেওয়া আবশ্যক।",
+    operatorAlert: "অপারেটর কোড প্রয়োজন।",
+    pinMatchTitle: "সরকারি ডাক নির্দেশিকা রেকর্ড",
+    pinClassNote: "গ্রামীণ এলাকায় ৩৫% পর্যন্ত এবং শহরাঞ্চলে ২৫% অনুদান।",
+    pinTrust: "✓ সর্বভারতীয় পিন কোড ডিরেক্টরি থেকে যাচাইকৃত",
+    confirmDistrictBtn: "এলাকা নিশ্চিত করুন ও এগিয়ে যান →",
+    capTitle: "উপলব্ধ নিজস্ব মূলধন (Margin Money)",
+    capSubSelf: "আপনি নিজের সঞ্চয় থেকে কত টাকা বিনিয়োগ করতে পারবেন?",
+    capSubAssisted: "আবেদনকারী কর্তৃক জমাকৃত উদ্যোক্তা মূলধন।",
+    capLabel: "নিজস্ব বিনিয়োগ (মার্জিন মানি)",
+    capAlert: "শূন্যের বেশি বিনিয়োগের পরিমাণ লিখুন।",
+    confirmCapBtn: "মূলধন নিশ্চিত করুন ও ক্ষেত্র বাছুন →",
+    capCapacityTitle: "প্রকল্পের আর্থিক সক্ষমতা",
+    maxSupportedSize: "সর্বোচ্চ সমর্থিত প্রকল্পের আকার:",
+    estBankLoan: "আনুমানিক ব্যাঙ্ক ঋণ:",
+    capTrust: "✓ আরবিআই ও কেভিআইসি প্রমোটার মার্জিন নিয়মাবলী",
+    secTitle: "ব্যবসায়িক ক্ষেত্র নির্বাচন করুন",
+    secSub: "ঋণ योग्यता জানতে যেকোনো একটি ক্ষেত্রে ক্লিক করুন।",
+    assessViability: "সম্ভাব্যতা দেখুন ➔",
+    sectors: {
+      Dairy: { label: "দুগ্ধ ও পশুপালন (Dairy)", desc: "মিল্ক চিলার, গবাদি পশু ক্রয়, পশুখাদ্য ইউনিট" },
+      Retail: { label: "মুদি দোকান (Kirana / Retail)", desc: "দোকানের মালামাল, ইনভেন্টরি, POS সেটআপ" },
+      FoodProcessing: { label: "খাদ্য প্রক্রিয়াকরণ (Food Proc.)", desc: "ময়দার মিল, তেল নিষ্কাশন, মশলা প্যাকেজিং" },
+      Tailoring: { label: "দর্জি ও পোশাক তৈরি (Tailoring)", desc: "সেলাই মেশিন, পোশাক উৎপাদন" },
+      Poultry: { label: "পোল্ট্রি ফার্মিং (Poultry)", desc: "শেড নির্মাণ, ফিড যন্ত্রপাতি" },
+      Textiles: { label: "বয়ন ও তাঁত শিল্প (Handloom)", desc: "পাওয়ারলুম, সুতা মজুত, রং করা" },
+      Handicrafts: { label: "মৃৎশিল্প ও হস্তশিল্প (Artisans)", desc: "টেরাকোটা, কাঠের কাজ, কারুশিল্প" },
+      Services: { label: "মেরামত ওয়ার্কশপ (Services)", desc: "বৈদ্যুতিক মেরামত, ওয়েল্ডিং ওয়ার্কশপ" }
+    },
+    scoreTitle: "ব্যবসায়িক সম্ভাব্যতা স্কোর",
+    scoreSub: (b, d, p) => `${d} (${p}) এ ${b} এর জন্য মূল্যায়ন`,
+    scoreVerdict: (d) => `${d} এ সাফল্যের অত্যন্ত ভালো সম্ভাবনা`,
+    scoreDesc: "স্থানীয় চাহিদা এবং জেলা ঋণ পরিকল্পনার ওপর ভিত্তি করে গণনাকৃত।",
+    marketBtn: "বাজার বিশ্লেষণ দেখুন →",
+    jumpLoanBtn: "সরাসরি ঋণ প্রকল্পে যান",
+    planTitle: "আপনার সরকারি ঋণ পরিকল্পনা",
+    planSub: (c, d) => `${d} এ ${c} উদ্যোক্তার জন্য অনুমোদিত প্রকল্প`,
+    bestFitTag: "সবচেয়ে উপযোগী প্রকল্প",
+    totProjectSize: "মোট প্রকল্প ব্যয়",
+    yourEquity: "উদ্যোক্তার নিজস্ব বিনিয়োগ",
+    eligibleCredit: "প্রাপ্য ব্যাঙ্ক ঋণ",
+    govtSubsidyGrant: "সরকারি অনুদান (ভর্তুকি)",
+    interestRateLabel: "আনুমানিক সুদের হার",
+    moratoriumLabel: "কিস্তি রেয়াত (মোরেটোরিয়াম)",
+    repaymentBtn: "কিস্তি পরিশোধের তালিকা →",
+    simulateBtn: "অন্য পরিমাণের পরীক্ষা করুন",
+    branchTitle: "লিড ব্যাঙ্ক ও CSC কেন্দ্র",
+    branchSub: (d, p) => `${d} (${p}) এর অনুমোদিত সহায়তা কেন্দ্রসমূহ`,
+    genDossierBtnSelf: "PDF ডাউনলোড করুন / প্রিন্ট করুন →",
+    genDossierBtnAssisted: "যাচাইকৃত কিয়স্ক ডকেট তৈরি করুন →",
+    reportTitleSelf: "প্রিন্টযোগ্য ব্যবসায়িক রিপোর্ট",
+    reportTitleAssisted: "অফিসিয়াল অপারেটর ভেরিফিকেশন ডকেট",
+    reportSubSelf: "ব্যাঙ্কে জমা দেওয়ার জন্য তৈরি ফাইল।",
+    reportSubAssisted: "লিড ব্যাঙ্ক অফিসারের কাছে পাঠানোর অফিসিয়াল ফাইল।",
+    downloadPdfBtn: "📥 PDF ডাউনলোড",
+    printBtn: "🖨️ প্রিন্ট করুন",
+    whatsAppBtn: "💬 হোয়াটসঅ্যাপ",
+    chatTitle: "দিশাকে জিজ্ঞাসা করুন",
+    chatSub: "জন সমর্থ নির্দেশিকার ভিত্তিতে তাৎক্ষণিক উত্তর।",
+    chatPlaceholder: "প্রকল্প বা ভর্তুকি সম্পর্কে জিজ্ঞাসা করুন...",
+    chatSend: "পাঠান ➔",
+    chatDisclaimer: "⚠️ দিশা কেবলমাত্র পরামর্শমূলক সহায়তা প্রদান করে। চূড়ান্ত সিদ্ধান্ত ব্যাঙ্কের।"
+  }
+};
+
+function t(key, ...args) {
+  const langObj = DICT[store.lang] || DICT.en;
+  let val = langObj[key] !== undefined ? langObj[key] : (DICT.en[key] !== undefined ? DICT.en[key] : key);
+  if (typeof val === 'function') {
+    return val(...args);
+  }
+  return val;
+}
+
+/**
+ * SCHEMES MASTER DATA WITH COMPREHENSIVE DESCRIPTIONS AND REAL STATISTICS
+ */
+const GOVT_DATA = {
+  version: "Terms as of September 2026",
+  pincodes: {
+    "390001": { district: "Vadodara", state: "Gujarat", tier: "semi-urban", rseti: "RSETI Vadodara - Bank of Baroda", mandi: "Sayajiganj APMC Central Yard" },
+    "391760": { district: "Vadodara (Waghodia)", state: "Gujarat", tier: "rural", rseti: "RSETI Vadodara - Bank of Baroda", mandi: "Waghodia Taluka APMC Sub-Yard" },
+    "110001": { district: "New Delhi", state: "Delhi", tier: "urban", rseti: "KVIC Training Centre Connaught Place", mandi: "Azadpur Sub-Yard" },
+    "482001": { district: "Jabalpur", state: "Madhya Pradesh", tier: "semi-urban", rseti: "SBI RSETI Jabalpur", mandi: "Krishi Upaj Mandi Jabalpur" },
+    "482021": { district: "Jabalpur (Panagar)", state: "Madhya Pradesh", tier: "rural", rseti: "SBI RSETI Jabalpur", mandi: "Panagar Krishi Upaj Mandi Yard" },
+    "800001": { district: "Patna", state: "Bihar", tier: "urban", rseti: "PNB RSETI Patna", mandi: "Bazar Samiti Patna" },
+    "801103": { district: "Patna (Danapur Rural)", state: "Bihar", tier: "rural", rseti: "PNB RSETI Patna", mandi: "Danapur Grain Mandi Yard" },
+    "560001": { district: "Bengaluru Urban", state: "Karnataka", tier: "urban", rseti: "Canara Bank RSETI", mandi: "Yeshwanthpur APMC" },
+    "562123": { district: "Bengaluru Rural (Nelamangala)", state: "Karnataka", tier: "rural", rseti: "Canara Bank RSETI", mandi: "Nelamangala APMC Sub-Yard" },
+    "600001": { district: "Chennai", state: "Tamil Nadu", tier: "urban", rseti: "Indian Bank RSETI", mandi: "Koyambedu Market" },
+    "602105": { district: "Tiruvallur Rural", state: "Tamil Nadu", tier: "rural", rseti: "Indian Bank RSETI Tiruvallur", mandi: "Tiruvallur Agro Produce Market" },
+    "700001": { district: "Kolkata", state: "West Bengal", tier: "urban", rseti: "UCO RSETI Rajarhat", mandi: "Posta Mandi" },
+    "743263": { district: "North 24 Parganas (Barasat Rural)", state: "West Bengal", tier: "rural", rseti: "UCO RSETI", mandi: "Barasat Agricultural Yard" }
+  },
+  schemes: [
+    {
+      id: "mudra_shishu",
+      name: "PMMY — Mudra Shishu",
+      maxLoan: 50000,
+      minMargin: 0,
+      subsidyPct: 0,
+      rate: "8.50% – 9.75%",
+      tenureMonths: 36,
+      moratorium: "3 months",
+      desc: "For micro-enterprises requiring seed capital up to ₹50,000. Zero processing fee, collateral-free credit.",
+      brief: "Mudra Shishu is designed for micro-entrepreneurs at early operational stages. It covers fruit/vegetable vending, tiny artisan units, repair counters, and home tailoring. Under RBI priority sector guidelines, banks and NBFC-MFIs disburse these without processing fees or third-party collateral, supported by the Credit Guarantee Fund for Micro Units (CGFMU).",
+      stats: {
+        sanctions: "₹1.48 Lakh Cr",
+        beneficiaries: "3.2 Crore+",
+        womenShare: "68%",
+        ruralShare: "65.8%",
+        avgTicket: "₹38,200"
+      },
+      eligibility: "Any Indian citizen with a viable non-farm income-generating micro-plan. No minimum education required. Clean bureau track record."
+    },
+    {
+      id: "mudra_kishor",
+      name: "PMMY — Mudra Kishor",
+      maxLoan: 500000,
+      minMargin: 0.10,
+      subsidyPct: 0,
+      rate: "9.25% – 11.00%",
+      tenureMonths: 60,
+      moratorium: "6 months",
+      desc: "For growing micro-enterprises scaling from ₹50,000 to ₹5 Lakhs. Equipment finance & cash credit.",
+      brief: "Mudra Kishor supports enterprises transitioning from subsistence to growth. It structures finance into term loans for machinery/fixtures and cash credit (CC limit) for working capital. Under CGTMSE, no third-party guarantor is required for loans up to ₹10 Lakhs.",
+      stats: {
+        sanctions: "₹2.92 Lakh Cr",
+        beneficiaries: "1.4 Crore+",
+        womenShare: "52%",
+        ruralShare: "54.2%",
+        avgTicket: "₹2,64,000"
+      },
+      eligibility: "Enterprises with established location proof, trade registration or Udyam registration, and supplier quotation for equipment or inventory."
+    },
+    {
+      id: "mudra_tarun",
+      name: "PMMY — Mudra Tarun",
+      maxLoan: 1000000,
+      minMargin: 0.15,
+      subsidyPct: 0,
+      rate: "10.00% – 11.50%",
+      tenureMonths: 60,
+      moratorium: "6 months",
+      desc: "For established units requiring capital investment between ₹5 Lakhs and ₹10 Lakhs.",
+      brief: "Mudra Tarun provides capital expenditure and scale-up liquidity for established micro-manufacturing and trading units. It covers packaging machines, transport commercial three/four-wheelers, cold display units, and inventory expansion.",
+      stats: {
+        sanctions: "₹1.84 Lakh Cr",
+        beneficiaries: "48 Lakh+",
+        womenShare: "39%",
+        ruralShare: "41.6%",
+        avgTicket: "₹7,85,000"
+      },
+      eligibility: "Operational track record of at least 12-24 months, 1-year GST or ITR records where applicable, bank statement for 6 months, and viable business cash flows."
+    },
+    {
+      id: "pmegp_special",
+      name: "PMEGP (KVIC Credit-Linked Subsidy)",
+      maxLoan: 5000000,
+      minMargin: 0.05,
+      subsidyPct: 0.35,
+      rate: "9.00% – 10.50%",
+      tenureMonths: 84,
+      moratorium: "12 months",
+      desc: "Central credit-linked capital subsidy by KVIC. 35% margin money subsidy for special categories in rural areas.",
+      brief: "Administered by the Ministry of MSME via KVIC, KVIB, and DICs. The government provides 15% to 35% margin money subsidy on project costs up to ₹50 Lakhs (Manufacturing) and ₹20 Lakhs (Service). The subsidy is held in a 3-year term deposit account before adjusting against the principal balance.",
+      stats: {
+        sanctions: "₹34,200 Cr",
+        beneficiaries: "10.1 Lakh Units",
+        ruralShare: "80.5%",
+        employmentGen: "74.8 Lakh Jobs"
+      },
+      eligibility: "Age 18+, minimum Class 8 pass for projects >₹10L (Mfg) or >₹5L (Service). Mandatory Entrepreneurship Development Programme (EDP) certification (from RSETI or online)."
+    },
+    {
+      id: "standup_india",
+      name: "Stand-Up India Scheme",
+      maxLoan: 10000000,
+      minMargin: 0.15,
+      subsidyPct: 0,
+      rate: "Base Rate + 3% + Tenor Premium",
+      tenureMonths: 84,
+      moratorium: "18 months",
+      desc: "Exclusively for SC, ST, and Women entrepreneurs setting up greenfield enterprises (₹10L to ₹1Cr).",
+      brief: "Mandates scheduled commercial banks to sanction at least one SC/ST borrower and at least one woman borrower per bank branch. It finances greenfield projects across manufacturing, services, agri-allied activities, or trading with an up to 18-month moratorium.",
+      stats: {
+        sanctions: "₹53,800 Cr",
+        beneficiaries: "2.3 Lakh Borrowers",
+        womenShare: "84%",
+        ruralShare: "48.9%",
+        avgTicket: "₹24.1 Lakh"
+      },
+      eligibility: "SC/ST or Woman borrower. In non-individual enterprises, 51% shareholding must be held by SC/ST or Women. Greenfield (first-time venture) projects only."
+    }
+  ]
+};
+
+const store = {
+  lang: "en",
+  operatorMode: "self",
+  category: "Women",
+  applicantName: "Pooja Sharma",
+  operatorId: "CSC-GJ-VAD-8842",
+  pincode: "391760",
+  village: "Waghodia Taluka (Rural)",
+  locationMeta: GOVT_DATA.pincodes["391760"],
+  marginCapital: 25000,
+  projectCost: 250000,
+  businessType: "Dairy",
+  feasibilityScore: 88,
+  selectedScheme: GOVT_DATA.schemes[3],
+  digiLockerLinked: false
+};
+
+function toggleFullScreen() {
+  if (!document.fullscreenElement) {
+    document.documentElement.requestFullscreen().catch(() => {});
+  } else if (document.exitFullscreen) {
+    document.exitFullscreen();
+  }
+}
+
+function navigate(route) {
+  window.location.hash = route;
+}
+
+function getRoute() {
+  return window.location.hash.replace("#", "") || "/";
+}
+
+let currentSpeech = null;
+function speakDesktopText(text) {
+  if (!('speechSynthesis' in window)) return;
+  window.speechSynthesis.cancel();
+  currentSpeech = new SpeechSynthesisUtterance(text);
+  const speechMap = {
+    hi: 'hi-IN', gu: 'gu-IN', mr: 'mr-IN', ta: 'ta-IN', bn: 'bn-IN', en: 'en-IN'
+  };
+  currentSpeech.lang = speechMap[store.lang] || 'en-IN';
+  currentSpeech.rate = 0.95;
+  window.speechSynthesis.speak(currentSpeech);
+}
+
+function stopDesktopSpeech() {
+  if ('speechSynthesis' in window) {
+    window.speechSynthesis.cancel();
+  }
+}
+
+function listenDesktopSpeech(onResult, onEnd) {
+  const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+  if (!SpeechRecognition) {
+    alert("Voice recognition is not supported in this browser. Please type directly.");
+    if (onEnd) onEnd();
+    return null;
+  }
+  const recognizer = new SpeechRecognition();
+  const speechMap = {
+    hi: 'hi-IN', gu: 'gu-IN', mr: 'mr-IN', ta: 'ta-IN', bn: 'bn-IN', en: 'en-IN'
+  };
+  recognizer.lang = speechMap[store.lang] || 'en-IN';
+  recognizer.onresult = (e) => onResult(e.results[0][0].transcript);
+  recognizer.onerror = () => { if (onEnd) onEnd(); };
+  recognizer.onend = () => { if (onEnd) onEnd(); };
+  recognizer.start();
+  return recognizer;
+}
+
+function evaluateScheme() {
+  const cost = store.projectCost;
+  const cat = store.category;
+  const isSpecial = ["SC", "ST", "Women", "OBC", "PwD", "Minority"].includes(cat);
+  const isRural = store.locationMeta ? (store.locationMeta.tier === "rural" || store.locationMeta.tier === "semi-urban") : true;
+
+  // 1. Stand-Up India: Greenfield projects between 10L and 1Cr (Exclusively SC, ST, Women)
+  if (cost >= 1000000 && ["SC", "ST", "Women"].includes(cat)) {
+    const raw = GOVT_DATA.schemes.find(s => s.id === "standup_india");
+    return { ...raw, minMargin: 0.15, subsidyPct: 0 };
+  }
+
+  // 2. PMEGP (KVIC): Dynamic subsidy & margin based on category + urban/rural
+  if (cost >= 200000) {
+    const raw = GOVT_DATA.schemes.find(s => s.id === "pmegp_special");
+    const minMargin = isSpecial ? 0.05 : 0.10; // 5% for special categories, 10% for General
+    const subsidyPct = isSpecial ? (isRural ? 0.35 : 0.25) : (isRural ? 0.25 : 0.15); // 35%/25% vs 25%/15%
+    return { ...raw, minMargin, subsidyPct };
+  }
+
+  // 3. PMMY Mudra Tiers
+  if (cost <= 50000) {
+    return GOVT_DATA.schemes.find(s => s.id === "mudra_shishu");
+  } else if (cost <= 500000) {
+    return GOVT_DATA.schemes.find(s => s.id === "mudra_kishor");
+  } else {
+    return GOVT_DATA.schemes.find(s => s.id === "mudra_tarun");
+  }
+}
+
+function evaluateFeasibility() {
+  let score = 70;
+  if (["Dairy", "Retail", "FoodProcessing"].includes(store.businessType)) score += 8;
+  if (["Poultry", "Handicrafts"].includes(store.businessType)) score += 5;
+  
+  // Category priority sector additions
+  if (["Women", "SC", "ST", "PwD"].includes(store.category)) score += 7;
+  else if (["OBC", "Minority"].includes(store.category)) score += 4;
+
+  const ratio = store.marginCapital / store.projectCost;
+  if (ratio >= 0.10) score += 8;
+  if (ratio >= 0.20) score += 6;
+  if (store.locationMeta.tier === "semi-urban" || store.locationMeta.tier === "rural") score += 5;
+  return Math.min(score, 98);
+}
+
+// SCHEME DETAIL MODAL HANDLER
+function openSchemeDetails(schemeId) {
+  const scheme = GOVT_DATA.schemes.find(s => s.id === schemeId);
+  if (!scheme) return;
+
+  const currentCat = store.category;
+  
+  // Category share distribution estimation based on priority lending statistics
+  let catShare = "35%";
+  if (currentCat === "Women") {
+    catShare = scheme.stats.womenShare || "68%";
+  } else if (["SC", "ST"].includes(currentCat)) {
+    catShare = "22%";
+  } else if (currentCat === "OBC") {
+    catShare = "31%";
+  } else if (currentCat === "General") {
+    catShare = "38%";
+  }
+
+  const modalBody = document.getElementById('modal-scheme-body');
+  modalBody.innerHTML = `
+    <div style="border-bottom: 2px solid var(--c-indigo); padding-bottom: 12px; margin-bottom: 16px;">
+      <div style="display: flex; justify-content: space-between; align-items: center;">
+        <span style="font-size: 13px; font-weight: 700; color: var(--c-turmeric); text-transform: uppercase;">GOVERNMENT SCHEME MASTER DOSSIER</span>
+        <span class="mode-indicator-chip" style="background: var(--c-indigo-subtle); color: var(--c-indigo);">Category: ${currentCat}</span>
+      </div>
+      <h2 style="font-family: var(--font-serif); font-size: 32px; color: var(--c-indigo); margin-top: 4px;">${scheme.name}</h2>
+      <div style="font-size: 15px; color: var(--c-muted); margin-top: 2px;">Concessional Interest: <strong>${scheme.rate}</strong> | Tenure: <strong>${scheme.tenureMonths} Months</strong> | Moratorium: <strong>${scheme.moratorium}</strong></div>
+    </div>
+
+    <div style="background: var(--c-turmeric-bg); border-left: 4px solid var(--c-turmeric); padding: 10px 14px; border-radius: 4px; margin-bottom: 16px; font-size: 14.5px;">
+      <strong>Statutory Norms (${currentCat}):</strong> 
+      ${scheme.id === 'standup_india' && !['Women', 'SC', 'ST'].includes(currentCat) 
+        ? 'Stand-Up India is earmarked specifically for SC, ST, and Women borrowers. Other categories should review PMEGP or Mudra Tarun.' 
+        : 'Applicant qualifies under RBI priority lending targets for this segment with standard back-ended subsidy or guarantee.'}
+    </div>
+
+    <div style="font-size: 16px; line-height: 1.6; margin-bottom: 18px; color: var(--c-text);">
+      <strong>Executive Scheme Brief:</strong><br/>
+      ${scheme.brief}
+    </div>
+
+    <div style="font-size: 15px; font-weight: 700; color: var(--c-indigo); margin-bottom: 6px;">CUMULATIVE PERFORMANCE & CATEGORY ANALYTICS (${currentCat.toUpperCase()})</div>
+    <div class="stats-matrix">
+      <div class="stat-item">
+        <div class="stat-val">${scheme.stats.sanctions}</div>
+        <div class="stat-lbl">Total Sanctions</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-val">${scheme.stats.beneficiaries}</div>
+        <div class="stat-lbl">Beneficiaries</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-val">${catShare}</div>
+        <div class="stat-lbl">${currentCat} Share</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-val">${scheme.stats.ruralShare || '78%'}</div>
+        <div class="stat-lbl">Rural Share</div>
+      </div>
+    </div>
+
+    <div style="background: #F8FAFC; border: 1px solid var(--c-border); padding: 16px; border-radius: 6px; margin: 16px 0;">
+      <div style="font-size: 14.5px; font-weight: 700; color: var(--c-indigo); margin-bottom: 4px;">STATUTORY ELIGIBILITY & PREREQUISITES</div>
+      <div style="font-size: 14.5px; color: var(--c-muted);">${scheme.eligibility}</div>
+    </div>
+
+    <div style="display: flex; gap: 12px; margin-top: 24px;">
+      <button class="btn-primary" style="flex: 1;" onclick="applySchemeFromModal('${scheme.id}')">Select This Scheme For My Business Plan →</button>
+      <button class="btn-secondary" onclick="closeSchemeModal()">Close Brief</button>
+    </div>
+  `;
+
+  document.getElementById('scheme-modal').style.display = 'flex';
+}
+
+function closeSchemeModal() {
+  document.getElementById('scheme-modal').style.display = 'none';
+}
+
+function applySchemeFromModal(schemeId) {
+  const scheme = GOVT_DATA.schemes.find(s => s.id === schemeId);
+  if (scheme) {
+    store.selectedScheme = scheme;
+    closeSchemeModal();
+    navigate('/loan-plan');
+  }
+}
+
+// -------------------------------------------------------------
+// 18 FULL-SCREEN LOCALIZED ROUTES
+// -------------------------------------------------------------
+
+const routes = {
+  "/": () => `
+    <div style="flex: 1; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 40px 0;">
+      <div style="font-size: 72px; margin-bottom: 16px;">🏛️</div>
+      <h2 class="page-title" style="font-size: 44px; margin-bottom: 16px;">${t('homeTitle')}</h2>
+      <p class="page-sub" style="font-size: 21px; max-width: 900px; line-height: 1.5; margin-bottom: 40px;">
+        ${t('homeSub')}
+      </p>
+
+      <div style="display: flex; justify-content: center; gap: 24px;">
+        <button class="btn-primary" style="padding: 18px 40px; font-size: 20px;" onclick="navigate('/language')">
+          ${t('startBtn')}
+        </button>
+        <button class="btn-secondary" style="padding: 18px 32px; font-size: 19px;" onclick="navigate('/schemes')">
+          ${t('browseSchemesBtn')}
+        </button>
+      </div>
+
+      <div class="trust-strip-desktop" style="margin-top: 54px; justify-content: center;">
+        ${t('trustHome')}
+      </div>
+    </div>
+  `,
+
+  "/language": () => {
+    const langs = [
+      { code: "en", label: "English", desc: "Official banking terms & printable dossier format" },
+      { code: "hi", label: "हिंदी (Hindi)", desc: "अपनी भाषा में पूरी वित्तीय जानकारी और योजना आंकड़े प्राप्त करें" },
+      { code: "gu", label: "ગુજરાતી (Gujarati)", desc: "સરકારી સબસિડી, ધિરાણ યોજનાઓ અને આંકડાકીય વિગત" },
+      { code: "mr", label: "मराठी (Marathi)", desc: "जिल्हा उद्योग केंद्र आणि शासकीय पतपुरवठा सांख्यिकी" },
+      { code: "ta", label: "தமிழ் (Tamil)", desc: "அரசு கடன் திட்டங்கள் மற்றும் வழிகாட்டி தகவல்கள்" },
+      { code: "bn", label: "বাংলা (Bengali)", desc: "এমএসএমই ঋণ, সরকারি অনুদান এবং বিশদ পরিসংখ্যান" }
+    ];
+
+    window.setLang = (code) => {
+      store.lang = code;
+      renderGlobalStaticText();
+      navigate('/assisted');
+    };
+
+    return `
+      <div class="desktop-page-head">
+        <div>
+          <h2 class="page-title">Choose Portal Language / भाषा का चयन</h2>
+          <p class="page-sub">Select your primary language for on-screen text, printable dockets, and voice readouts.</p>
+        </div>
+        <button class="desktop-voice-bar" onclick="speakDesktopText('Please select your preferred language.')">
+          ${t('readAloud')}
+        </button>
+      </div>
+
+      <div class="grid-3col">
+        ${langs.map(l => `
+          <div class="selection-tile ${store.lang === l.code ? 'selected' : ''}" onclick="setLang('${l.code}')">
+            <div>
+              <div style="font-size: 24px; font-weight: 700; color: var(--c-indigo);">${l.label}</div>
+              <div style="font-size: 15px; color: var(--c-muted); margin-top: 6px;">${l.desc}</div>
+            </div>
+            <div style="text-align: right; color: var(--c-turmeric); font-weight: bold; margin-top: 14px;">Select ➔</div>
+          </div>
+        `).join('')}
+      </div>
+    `;
+  },
+
+  "/assisted": () => {
+    window.setMode = (m) => {
+      store.operatorMode = m;
+      renderGlobalStaticText();
+      navigate('/category');
+    };
+
+    return `
+      <div class="desktop-page-head">
+        <div>
+          <h2 class="page-title">${t('whoTitle')}</h2>
+          <p class="page-sub">${t('whoSub')}</p>
+        </div>
+        <button class="desktop-voice-bar" onclick="speakDesktopText('${t('whoTitle')}')">
+          ${t('readAloud')}
+        </button>
+      </div>
+
+      <div class="grid-2col">
+        <div class="selection-tile ${store.operatorMode === 'self' ? 'selected' : ''}" style="padding: 40px;" onclick="setMode('self')">
+          <div>
+            <div style="font-size: 28px; font-weight: 700; color: var(--c-indigo); margin-bottom: 10px;">${t('forMyself')}</div>
+            <p style="font-size: 17px; color: var(--c-muted);">${t('forMyselfDesc')}</p>
+          </div>
+          <button class="btn-primary" style="margin-top: 28px;">${t('proceedEntrepreneur')}</button>
+        </div>
+
+        <div class="selection-tile ${store.operatorMode === 'assisted' ? 'selected' : ''}" style="padding: 40px;" onclick="setMode('assisted')">
+          <div>
+            <div style="font-size: 28px; font-weight: 700; color: var(--c-indigo); margin-bottom: 10px;">${t('assistedDesk')}</div>
+            <p style="font-size: 17px; color: var(--c-muted);">${t('assistedDeskDesc')}</p>
+          </div>
+          <button class="btn-primary" style="margin-top: 28px; background: var(--c-turmeric); border-color: var(--c-turmeric);">${t('proceedOperator')}</button>
+        </div>
+      </div>
+    `;
+  },
+
+  "/category": () => {
+    const cats = DICT[store.lang].categories;
+    window.selectCategory = (c) => {
+      store.category = c;
+      navigate('/location');
+    };
+
+    return `
+      <div class="desktop-page-head">
+        <div>
+          <h2 class="page-title">
+            ${t('catTitle')} 
+            <span class="req-badge">${t('requiredBadge')}</span>
+            <span class="mode-indicator-chip ${store.operatorMode === 'assisted' ? 'operator' : ''}">
+              ${store.operatorMode === 'assisted' ? 'OPERATOR DESK' : 'SELF APPLICATION'}
+            </span>
+          </h2>
+          <p class="page-sub">${t('catSub')}</p>
+        </div>
+        <button class="desktop-voice-bar" onclick="speakDesktopText('${t('catTitle')}')">
+          ${t('readAloud')}
+        </button>
+      </div>
+
+      <div class="grid-3col">
+        ${Object.keys(cats).map(k => `
+          <div class="selection-tile ${store.category === k ? 'selected' : ''}" onclick="selectCategory('${k}')">
+            <div>
+              <div style="font-size: 21px; font-weight: 700; color: var(--c-indigo);">${cats[k].label}</div>
+              <div style="font-size: 14px; color: var(--c-muted); margin-top: 6px;">${cats[k].note}</div>
+            </div>
+            <div style="margin-top: 16px; font-size: 14.5px; font-weight: bold; color: var(--c-indigo);">${t('selectTier')}</div>
+          </div>
+        `).join('')}
+      </div>
+    `;
+  },
+
+  "/location": () => {
+    window.lookupDesktopPin = () => {
+      const pin = document.getElementById('pin-desktop').value.trim();
+      const inputEl = document.getElementById('pin-desktop');
+
+      if (/^\d{6}$/.test(pin)) {
+        inputEl.classList.remove('input-error');
+        store.pincode = pin;
+        store.locationMeta = GOVT_DATA.pincodes[pin] || {
+          district: "District Jurisdiction",
+          state: "State Jurisdiction",
+          tier: "semi-urban",
+          rseti: "Lead Bank Training Institute",
+          mandi: "Central District APMC"
+        };
+        document.getElementById('loc-preview-box').innerHTML = `
+          <div style="font-size: 22px; font-weight: bold; color: var(--c-indigo);">
+            📍 ${store.locationMeta.district}, ${store.locationMeta.state}
+          </div>
+          <div style="font-size: 15px; color: var(--c-muted); margin-top: 4px;">
+            Classification: <strong>${store.locationMeta.tier.toUpperCase()}</strong> | APMC: <strong>${store.locationMeta.mandi}</strong>
+          </div>
+        `;
+      }
+    };
+
+    window.validateAndProceedLoc = () => {
+      const pin = document.getElementById('pin-desktop').value.trim();
+      const village = document.getElementById('block-desktop').value.trim();
+      const alertBox = document.getElementById('loc-alert-box');
+      const pinEl = document.getElementById('pin-desktop');
+      const villageEl = document.getElementById('block-desktop');
+
+      let applicantNameEl = document.getElementById('applicant-name');
+      let operatorCodeEl = document.getElementById('operator-code');
+
+      pinEl.classList.remove('input-error');
+      villageEl.classList.remove('input-error');
+      if (applicantNameEl) applicantNameEl.classList.remove('input-error');
+      if (operatorCodeEl) operatorCodeEl.classList.remove('input-error');
+
+      const isPinValid = /^\d{6}$/.test(pin);
+      const isVillageValid = village.length > 1;
+
+      if (!isPinValid || !isVillageValid) {
+        alertBox.innerHTML = `⚠️ <strong>${t('requiredBadge')}:</strong> ${t('bothLocAlert')}`;
+        alertBox.style.display = 'flex';
+        if (!isPinValid) pinEl.classList.add('input-error');
+        if (!isVillageValid) villageEl.classList.add('input-error');
+        pinEl.focus();
+        speakDesktopText(t('bothLocAlert'));
+        return;
+      }
+
+      if (store.operatorMode === 'assisted') {
+        const appName = applicantNameEl.value.trim();
+        const opCode = operatorCodeEl.value.trim();
+
+        if (appName.length < 2) {
+          alertBox.innerHTML = `⚠️ <strong>${t('requiredBadge')}:</strong> ${t('nameAlert')}`;
+          alertBox.style.display = 'flex';
+          applicantNameEl.classList.add('input-error');
+          applicantNameEl.focus();
+          return;
+        }
+        if (opCode.length < 3) {
+          alertBox.innerHTML = `⚠️ <strong>${t('requiredBadge')}:</strong> ${t('operatorAlert')}`;
+          alertBox.style.display = 'flex';
+          operatorCodeEl.classList.add('input-error');
+          operatorCodeEl.focus();
+          return;
+        }
+
+        store.applicantName = appName;
+        store.operatorId = opCode;
+      }
+
+      alertBox.style.display = 'none';
+      store.pincode = pin;
+      store.village = village;
+      navigate('/capital');
+    };
+
+    window.voiceDesktopPin = () => {
+      const btn = document.getElementById('mic-pin-desktop');
+      btn.classList.add('listening');
+      listenDesktopSpeech((txt) => {
+        const digits = txt.replace(/[^0-9]/g, '');
+        if (digits.length >= 6) {
+          document.getElementById('pin-desktop').value = digits.substring(0, 6);
+          lookupDesktopPin();
+        } else {
+          document.getElementById('block-desktop').value = txt;
+        }
+      }, () => {
+        btn.classList.remove('listening');
+      });
+    };
+
+    return `
+      <div class="desktop-page-head">
+        <div>
+          <h2 class="page-title">
+            ${t('locTitle')} 
+            <span class="req-badge">${t('requiredBadge')}</span>
+            <span class="mode-indicator-chip ${store.operatorMode === 'assisted' ? 'operator' : ''}">
+              ${store.operatorMode === 'assisted' ? 'OPERATOR TERMINAL' : 'CITIZEN SELF-ENTRY'}
+            </span>
+          </h2>
+          <p class="page-sub">${store.operatorMode === 'assisted' ? t('locSubAssisted') : t('locSubSelf')}</p>
+        </div>
+        <button class="desktop-voice-bar" onclick="speakDesktopText('${t('locTitle')}')">
+          ${t('readAloud')}
+        </button>
+      </div>
+
+      <div id="loc-alert-box" class="validation-alert"></div>
+
+      <div class="grid-2col">
+        <div class="ledger-card" data-seal="${store.operatorMode === 'assisted' ? 'CSC VLE REGISTER ENTRY' : t('sealText')}">
+          
+          ${store.operatorMode === 'assisted' ? `
+            <div style="background: #F1F5F9; border: 1px solid #CBD5E1; padding: 14px; border-radius: 4px; margin-bottom: 20px;">
+              <div style="font-size: 13px; font-weight: 700; color: var(--c-indigo); text-transform: uppercase; margin-bottom: 6px;">Kiosk Operator Audit Fields</div>
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+                <div>
+                  <label style="font-size: 14px; font-weight: 700; display: block;">${t('applicantNameLabel')} *</label>
+                  <input type="text" id="applicant-name" class="text-input-lg" value="${store.applicantName}" style="font-size: 16px; padding: 8px 10px;" />
+                </div>
+                <div>
+                  <label style="font-size: 14px; font-weight: 700; display: block;">${t('operatorCodeLabel')} *</label>
+                  <input type="text" id="operator-code" class="text-input-lg" value="${store.operatorId}" style="font-size: 16px; padding: 8px 10px;" />
+                </div>
+              </div>
+            </div>
+          ` : ''}
+
+          <label style="font-size: 17px; font-weight: 700; color: var(--c-indigo); margin-bottom: 10px; display: block;">
+            ${t('pinLabel')} *
+          </label>
+          <div class="input-wrap-desktop">
+            <input type="tel" id="pin-desktop" class="text-input-lg" maxlength="6" value="${store.pincode}" oninput="lookupDesktopPin()" placeholder="e.g. 391760" required />
+            <button id="mic-pin-desktop" class="btn-mic-desktop" onclick="voiceDesktopPin()">${t('voicePinBtn')}</button>
+          </div>
+
+          <div style="margin-top: 28px;">
+            <label style="font-size: 16px; font-weight: 700; color: var(--c-indigo); margin-bottom: 8px; display: block;">
+              ${t('villageLabel')} *
+            </label>
+            <input type="text" id="block-desktop" class="text-input-lg" style="font-size: 18px; padding: 12px 16px;" value="${store.village}" placeholder="e.g. Waghodia Taluka" required />
+          </div>
+
+          <button class="btn-primary" style="margin-top: 28px; width: 100%;" onclick="validateAndProceedLoc()">
+            ${t('confirmDistrictBtn')}
+          </button>
+        </div>
+
+        <div class="ledger-card" data-seal="${t('sealText')}" style="display: flex; flex-direction: column; justify-content: space-between; background: #FAF8F5;">
+          <div>
+            <div style="font-size: 15px; font-weight: 700; color: var(--c-muted); margin-bottom: 10px;">${t('pinMatchTitle')}</div>
+            <div id="loc-preview-box" style="padding: 20px; background: #fff; border: 1px solid var(--c-border); border-radius: 6px;">
+              <div style="font-size: 22px; font-weight: bold; color: var(--c-indigo);">
+                📍 ${store.locationMeta.district}, ${store.locationMeta.state}
+              </div>
+              <div style="font-size: 15px; color: var(--c-muted); margin-top: 4px;">
+                Classification: <strong>${store.locationMeta.tier.toUpperCase()}</strong> | APMC: <strong>${store.locationMeta.mandi}</strong>
+              </div>
+            </div>
+            <div style="font-size: 15px; color: var(--c-muted); margin-top: 16px; line-height: 1.6;">
+              ${t('pinClassNote')}
+            </div>
+          </div>
+
+          <div class="trust-strip-desktop">
+            ${t('pinTrust')}
+          </div>
+        </div>
+      </div>
+    `;
+  },
+
+  "/capital": () => {
+    window.syncDesktopCap = (val) => {
+      const num = parseInt(val, 10) || 0;
+      store.marginCapital = num;
+      store.projectCost = num * 10;
+      document.getElementById('cap-slider-desktop').value = num;
+      document.getElementById('cap-num-desktop').value = num;
+      document.getElementById('est-project-desktop').innerText = "₹" + store.projectCost.toLocaleString('en-IN');
+      document.getElementById('est-loan-desktop').innerText = "₹" + (store.projectCost - num).toLocaleString('en-IN');
+    };
+
+    window.validateAndProceedCap = () => {
+      const num = parseInt(document.getElementById('cap-num-desktop').value, 10) || 0;
+      const alertBox = document.getElementById('cap-alert-box');
+
+      if (num <= 0) {
+        alertBox.style.display = 'flex';
+        document.getElementById('cap-num-desktop').focus();
+        speakDesktopText(t('capAlert'));
+        return;
+      }
+
+      alertBox.style.display = 'none';
+      navigate('/business-type');
+    };
+
+    return `
+      <div class="desktop-page-head">
+        <div>
+          <h2 class="page-title">${t('capTitle')} <span class="req-badge">${t('requiredBadge')}</span></h2>
+          <p class="page-sub">${store.operatorMode === 'assisted' ? t('capSubAssisted') : t('capSubSelf')}</p>
+        </div>
+        <button class="desktop-voice-bar" onclick="speakDesktopText('${t('capTitle')}')">
+          ${t('readAloud')}
+        </button>
+      </div>
+
+      <div id="cap-alert-box" class="validation-alert">
+        ⚠️ <strong>${t('requiredBadge')}:</strong> ${t('capAlert')}
+      </div>
+
+      <div class="grid-2col">
+        <div class="ledger-card" data-seal="${t('sealText')}" style="text-align: center; padding: 36px;">
+          <div style="font-size: 16px; color: var(--c-muted); font-weight: 700;">${t('capLabel')} *</div>
+          <div style="font-size: 44px; font-family: var(--font-serif); color: var(--c-indigo); margin: 14px 0;">
+            ₹<input type="number" id="cap-num-desktop" min="1000" value="${store.marginCapital}" oninput="syncDesktopCap(this.value)" style="width: 260px; font-size: 38px; font-family: inherit; font-weight: bold; border: 2px dashed var(--c-indigo); text-align: center; border-radius: 4px; padding: 4px 8px;">
+          </div>
+
+          <div style="margin: 32px 0 20px 0;">
+            <input type="range" id="cap-slider-desktop" min="5000" max="1000000" step="5000" value="${store.marginCapital}" oninput="syncDesktopCap(this.value)" style="width: 100%; height: 14px; accent-color: var(--c-turmeric);" />
+            <div style="display: flex; justify-content: space-between; font-size: 15px; color: var(--c-muted); margin-top: 8px;">
+              <span>₹5,000</span>
+              <span>₹5,00,000</span>
+              <span>₹10,00,000+</span>
+            </div>
+          </div>
+
+          <button class="btn-primary" style="margin-top: 24px; width: 100%;" onclick="validateAndProceedCap()">
+            ${t('confirmCapBtn')}
+          </button>
+        </div>
+
+        <div class="ledger-card" data-seal="${t('sealText')}" style="display: flex; flex-direction: column; justify-content: space-between; background: #FAF8F5;">
+          <div>
+            <div style="font-size: 16px; font-weight: 700; color: var(--c-muted); margin-bottom: 14px;">${t('capCapacityTitle')}</div>
+            
+            <div style="background: #fff; border: 1px solid var(--c-border); padding: 20px; border-radius: 6px; margin-bottom: 16px;">
+              <div style="font-size: 15px; color: var(--c-muted);">${t('maxSupportedSize')}</div>
+              <div id="est-project-desktop" style="font-size: 36px; font-weight: bold; color: var(--c-turmeric); font-family: var(--font-serif);">
+                ₹${store.projectCost.toLocaleString('en-IN')}
+              </div>
+            </div>
+
+            <div style="background: #fff; border: 1px solid var(--c-border); padding: 20px; border-radius: 6px;">
+              <div style="font-size: 15px; color: var(--c-muted);">${t('estBankLoan')}</div>
+              <div id="est-loan-desktop" style="font-size: 32px; font-weight: bold; color: var(--c-green); font-family: var(--font-serif);">
+                ₹${(store.projectCost - store.marginCapital).toLocaleString('en-IN')}
+              </div>
+            </div>
+          </div>
+
+          <div class="trust-strip-desktop">
+            ${t('capTrust')}
+          </div>
+        </div>
+      </div>
+    `;
+  },
+
+  "/business-type": () => {
+    const icons = {
+      Dairy: "🐄", Retail: "🏪", FoodProcessing: "🌾", Tailoring: "🧵",
+      Poultry: "🐔", Textiles: "🧣", Handicrafts: "🏺", Services: "🔧"
+    };
+    const secList = DICT[store.lang].sectors;
+
+    window.selectDesktopBiz = (type) => {
+      store.businessType = type;
+      store.feasibilityScore = evaluateFeasibility();
+      store.selectedScheme = evaluateScheme();
+      navigate('/feasibility');
+    };
+
+    return `
+      <div class="desktop-page-head">
+        <div>
+          <h2 class="page-title">${t('secTitle')} <span class="req-badge">${t('requiredBadge')}</span></h2>
+          <p class="page-sub">${t('secSub')}</p>
+        </div>
+        <button class="desktop-voice-bar" onclick="speakDesktopText('${t('secTitle')}')">
+          ${t('readAloud')}
+        </button>
+      </div>
+
+      <div class="grid-4col">
+        ${Object.keys(secList).map(k => `
+          <div class="selection-tile ${store.businessType === k ? 'selected' : ''}" onclick="selectDesktopBiz('${k}')" style="min-height: 150px;">
+            <div>
+              <div style="font-size: 36px; margin-bottom: 8px;">${icons[k]}</div>
+              <div style="font-size: 20px; font-weight: 700; color: var(--c-indigo);">${secList[k].label}</div>
+              <div style="font-size: 13.5px; color: var(--c-muted); margin-top: 4px;">${secList[k].desc}</div>
+            </div>
+            <div style="font-size: 14px; font-weight: bold; color: var(--c-turmeric); margin-top: 10px;">${t('assessViability')}</div>
+          </div>
+        `).join('')}
+      </div>
+    `;
+  },
+
+  "/feasibility": () => {
+    const secLabel = DICT[store.lang].sectors[store.businessType].label;
+    return `
+      <div class="desktop-page-head">
+        <div>
+          <h2 class="page-title">${t('scoreTitle')}</h2>
+          <p class="page-sub">${t('scoreSub', secLabel, store.locationMeta.district, store.pincode)}</p>
+        </div>
+        <button class="desktop-voice-bar" onclick="speakDesktopText('${t('scoreTitle')}: ${store.feasibilityScore}')">
+          ${t('readAloud')}
+        </button>
+      </div>
+
+      <div class="desktop-score-box">
+        <div class="score-circle-lg">${store.feasibilityScore}</div>
+        <div style="flex: 1;">
+          <div style="font-size: 28px; font-weight: 700; color: var(--c-indigo); font-family: var(--font-serif);">
+            ${t('scoreVerdict', store.locationMeta.district)}
+          </div>
+          <p style="font-size: 17.5px; color: var(--c-muted); margin: 8px 0 20px 0;">
+            ${t('scoreDesc')}
+          </p>
+          <div style="display: flex; gap: 16px;">
+            <button class="btn-primary" onclick="navigate('/loan-plan')">
+              ${t('jumpLoanBtn')}
+            </button>
+          </div>
+        </div>
+      </div>
+    `;
+  },
+
+  "/loan-plan": () => {
+    const scheme = store.selectedScheme;
+    const loanAmt = store.projectCost - store.marginCapital;
+    const subsidyAmt = Math.round(store.projectCost * scheme.subsidyPct);
+    const catLabel = DICT[store.lang].categories[store.category].label;
+
+    return `
+      <div class="desktop-page-head">
+        <div>
+          <h2 class="page-title">${t('planTitle')}</h2>
+          <p class="page-sub">${t('planSub', catLabel, store.locationMeta.district)}</p>
+        </div>
+        <button class="desktop-voice-bar" onclick="speakDesktopText('${scheme.name}. Total Project: ₹${store.projectCost.toLocaleString('en-IN')}')">
+          ${t('readAloud')}
+        </button>
+      </div>
+
+      <div class="grid-2col">
+        <div class="ledger-card" data-seal="${t('sealText')}">
+          <div style="font-size: 14.5px; font-weight: 700; color: var(--c-turmeric);">${t('bestFitTag')}</div>
+          <div style="font-size: 30px; font-family: var(--font-serif); color: var(--c-indigo); margin: 6px 0;">
+            ${scheme.name}
+          </div>
+          <p style="font-size: 15.5px; color: var(--c-muted); margin-bottom: 20px;">
+            ${scheme.desc}
+          </p>
+
+          <table class="ledger-table-desktop">
+            <tr><td>${t('totProjectSize')}</td><td><strong>₹${store.projectCost.toLocaleString('en-IN')}</strong></td></tr>
+            <tr><td>${t('yourEquity')}</td><td><strong>₹${store.marginCapital.toLocaleString('en-IN')}</strong> (${Math.round((store.marginCapital/store.projectCost)*100)}%)</td></tr>
+            <tr><td>${t('eligibleCredit')}</td><td><strong style="color: var(--c-green);">₹${loanAmt.toLocaleString('en-IN')}</strong></td></tr>
+            <tr><td>${t('govtSubsidyGrant')}</td><td><strong style="color: var(--c-turmeric);">${subsidyAmt > 0 ? "₹" + subsidyAmt.toLocaleString('en-IN') + " (35% Grant)" : "Concessional Cap"}</strong></td></tr>
+            <tr><td>${t('interestRateLabel')}</td><td>${scheme.rate}</td></tr>
+            <tr><td>${t('moratoriumLabel')}</td><td>${scheme.moratorium}</td></tr>
+          </table>
+
+          <div class="trust-strip-desktop">
+            ✓ Grounded in Jan Samarth Standards · ${GOVT_DATA.version}
+          </div>
+        </div>
+
+        <div class="ledger-card" data-seal="${t('sealText')}" style="display: flex; flex-direction: column; justify-content: space-between; background: #FAF8F5;">
+          <div>
+            <div style="font-size: 17px; font-weight: 700; color: var(--c-indigo); margin-bottom: 12px;">Official Strategy & Action</div>
+            <p style="font-size: 15.5px; line-height: 1.6; color: var(--c-muted); margin-bottom: 16px;">
+              For a project size of ₹${store.projectCost.toLocaleString('en-IN')} in <strong>${store.locationMeta.district}</strong>, this scheme delivers optimal subsidy without demanding collateral security.
+            </p>
+            <button class="btn-secondary" style="width: 100%; margin-bottom: 12px;" onclick="openSchemeDetails('${scheme.id}')">
+              📄 View Scheme Brief, Guidelines & Statistics ➔
+            </button>
+          </div>
+
+          <div style="display: flex; gap: 16px; margin-top: 28px;">
+            <button class="btn-primary" style="flex: 1;" onclick="navigate('/report')">
+              ${store.operatorMode === 'assisted' ? t('genDossierBtnAssisted') : t('genDossierBtnSelf')}
+            </button>
+            <button class="btn-secondary" onclick="navigate('/simulator')">
+              ${t('simulateBtn')}
+            </button>
+          </div>
+        </div>
+      </div>
+    `;
+  },
+
+  "/report": () => {
+    window.desktopWhatsApp = () => {
+      const modeTag = store.operatorMode === 'assisted' ? `[CSC VLE Verified: ${store.operatorId}]` : `[Entrepreneur Plan]`;
+      const subsidy = Math.round(store.projectCost * store.selectedScheme.subsidyPct);
+      const msg = `*DISHA Government Credit-Linked Business Report ${modeTag}*\n` +
+        `• Applicant: ${store.applicantName}\n` +
+        `• Sector: ${store.businessType}\n` +
+        `• Category: ${store.category}\n` +
+        `• Location: ${store.locationMeta.district} (${store.village}, PIN: ${store.pincode})\n` +
+        `• Total Project Cost: ₹${store.projectCost.toLocaleString('en-IN')}\n` +
+        `• Promoter Margin (Equity): ₹${store.marginCapital.toLocaleString('en-IN')}\n` +
+        `• Recommended Scheme: ${store.selectedScheme.name}\n` +
+        `• Eligible Govt Subsidy: ₹${subsidy.toLocaleString('en-IN')} (${Math.round(store.selectedScheme.subsidyPct * 100)}%)\n` +
+        `• Feasibility Viability Score: ${store.feasibilityScore}/100\n` +
+        `• Nearest APMC Hub: ${store.locationMeta.mandi}\n` +
+        `• Lead Bank Training: ${store.locationMeta.rseti}`;
+      window.open(`https://web.whatsapp.com/send?text=${encodeURIComponent(msg)}`, '_blank');
+    };
+
+    window.downloadPdfDossier = () => {
+      const element = document.getElementById('report-docket-card');
+      if (!element) return;
+      const cleanName = store.applicantName.replace(/\s+/g, '_');
+      const opt = {
+        margin:       10,
+        filename:     `DISHA-Advisory-Dossier-${cleanName}-${store.pincode}.pdf`,
+        image:        { type: 'jpeg', quality: 0.98 },
+        html2canvas:  { scale: 2, useCORS: true, letterRendering: true },
+        jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
+      };
+      html2pdf().set(opt).from(element).save();
+    };
+
+    const secLabel = DICT[store.lang].sectors[store.businessType].label;
+    const catLabel = DICT[store.lang].categories[store.category].label;
+    const subsidy = Math.round(store.projectCost * store.selectedScheme.subsidyPct);
+
+    return `
+      <div class="desktop-page-head">
+        <div>
+          <h2 class="page-title">${store.operatorMode === 'assisted' ? t('reportTitleAssisted') : t('reportTitleSelf')}</h2>
+          <p class="page-sub">${store.operatorMode === 'assisted' ? t('reportSubAssisted') : t('reportSubSelf')}</p>
+        </div>
+        <div style="display: flex; gap: 12px;">
+          <button class="btn-primary" onclick="downloadPdfDossier()">${t('downloadPdfBtn')}</button>
+          <button class="btn-secondary" onclick="window.print()">${t('printBtn')}</button>
+          <button class="btn-secondary" onclick="desktopWhatsApp()">${t('whatsAppBtn')}</button>
+        </div>
+      </div>
+
+      <div class="ledger-card" id="report-docket-card" data-seal="${store.operatorMode === 'assisted' ? 'OFFICIAL CSC TRANSMISSION DOCKET' : t('sealText')}" style="padding: 40px;">
+        <div style="display: flex; justify-content: space-between; border-bottom: 2px solid var(--c-indigo); padding-bottom: 20px; margin-bottom: 24px;">
+          <div>
+            <div style="font-family: var(--font-serif); font-size: 30px; color: var(--c-indigo);">
+              ${store.operatorMode === 'assisted' ? 'CSC DIGITAL SEVA KENDRA · VERIFIED LOAN DOCKET' : 'DISHA CREDIT-LINKED BUSINESS ADVISORY'}
+            </div>
+            <div style="font-size: 14.5px; color: var(--c-muted);">Jan Samarth & KVIC Standard Project Profile · DISHA - DISHA ADVISORY PORTAL</div>
+          </div>
+          <div style="text-align: right; font-family: var(--font-mono); font-size: 14px;">
+            <div>TOKEN: DSH-${Math.floor(100000 + Math.random() * 900000)}</div>
+            ${store.operatorMode === 'assisted' ? `<div style="color: var(--c-turmeric); font-weight: bold;">OPERATOR ID: ${store.operatorId}</div>` : ''}
+            <div>DATE: ${GOVT_DATA.version}</div>
+          </div>
+        </div>
+
+        <div class="grid-2col" style="margin-bottom: 24px;">
+          <table class="ledger-table-desktop">
+            <tr><td>Applicant Name</td><td><strong>${store.applicantName}</strong></td></tr>
+            <tr><td>Beneficiary Sector</td><td><strong>${secLabel}</strong></td></tr>
+            <tr><td>District & State</td><td><strong>${store.locationMeta.district}, ${store.locationMeta.state}</strong></td></tr>
+            <tr><td>Village / Tehsil</td><td><strong>${store.village}</strong></td></tr>
+            <tr><td>Postal Classification</td><td>${store.locationMeta.tier.toUpperCase()} (${store.pincode})</td></tr>
+          </table>
+
+          <table class="ledger-table-desktop">
+            <tr><td>Category</td><td><strong>${catLabel}</strong></td></tr>
+            <tr><td>Viability Assessment Score</td><td><strong style="color: var(--c-green);">${store.feasibilityScore} / 100</strong></td></tr>
+            <tr><td>Recommended Scheme</td><td><strong>${store.selectedScheme.name}</strong></td></tr>
+            <tr><td>Project Outlay</td><td><strong>₹${store.projectCost.toLocaleString('en-IN')}</strong></td></tr>
+            <tr><td>Eligible Capital Subsidy</td><td><strong style="color: var(--c-turmeric);">₹${subsidy.toLocaleString('en-IN')} (${Math.round(store.selectedScheme.subsidyPct * 100)}%)</strong></td></tr>
+          </table>
+        </div>
+
+        <div style="background: #FAF8F5; border: 1.5px solid var(--c-border); padding: 20px; border-radius: 6px; margin-bottom: 24px;">
+          <div style="font-size: 16px; font-weight: 700; color: var(--c-indigo); margin-bottom: 8px;">
+            📍 DISTRICT OPERATIONAL ADVISORY & SUPPLY LINKAGES
+          </div>
+          <ul style="padding-left: 20px; font-size: 15px; color: var(--c-text); line-height: 1.7;">
+            <li><strong>Raw Material Procurement:</strong> Certified Mandi Linkage: <em>${store.locationMeta.mandi}</em>. Procuring raw inventory through certified mandis guarantees GST invoice verification for bank credit compliance.</li>
+            <li><strong>Mandatory Training Prerequisite:</strong> Free EDP certification available via <em>${store.locationMeta.rseti}</em> under Ministry of Rural Development mandates.</li>
+            <li><strong>Bank Collateral Rule:</strong> Under RBI Master Direction FIDD.MSME.BC.12/06.02.31/2017-18 and CGTMSE/CGFMU rules, no collateral security or third-party guarantee can be required for this project ticket size.</li>
+          </ul>
+        </div>
+
+        ${store.operatorMode === 'assisted' ? `
+          <div class="operator-docket-box">
+            <div style="font-size: 14px; font-weight: 700; color: var(--c-indigo); margin-bottom: 4px;">OPERATOR TRANSMISSION ATTESTATION</div>
+            <p style="font-size: 13.5px; color: var(--c-muted);">
+              I hereby certify that the applicant has appeared in person at this CSC Centre / Banking Kiosk. All submitted identity, category, and domicile credentials have been cross-verified against official digital records.
+            </p>
+            <div class="operator-signature-grid">
+              <div class="signature-slot">
+                Kiosk VLE Operator Signature & Digital ID Seal
+              </div>
+              <div class="signature-slot">
+                Lead Bank District Credit Officer Acknowledgement Stamp
+              </div>
+            </div>
+          </div>
+        ` : `
+          <div class="trust-strip-desktop" style="justify-content: center;">
+            ✓ Ready for presentation to Bank Credit Committee or CSC Digital Upload Portal
+          </div>
+        `}
+      </div>
+    `;
+  },
+
+  "/simulator": () => {
+    window.simUpdate = (val) => {
+      const num = parseInt(val, 10);
+      document.getElementById('sim-out-cost').innerText = "₹" + num.toLocaleString('en-IN');
+      const margin = Math.round(num * 0.10);
+      document.getElementById('sim-out-margin').innerText = "₹" + margin.toLocaleString('en-IN');
+      document.getElementById('sim-out-loan').innerText = "₹" + (num - margin).toLocaleString('en-IN');
+    };
+
+    window.simApply = () => {
+      const num = parseInt(document.getElementById('sim-range').value, 10);
+      store.projectCost = num;
+      store.marginCapital = Math.round(num * 0.10);
+      store.selectedScheme = evaluateScheme();
+      navigate('/loan-plan');
+    };
+
+    return `
+      <div class="desktop-page-head">
+        <div>
+          <h2 class="page-title">Project Cost & Margin Simulator</h2>
+          <p class="page-sub">Slide to test different project scales and observe real-time scheme re-routing.</p>
+        </div>
+      </div>
+
+      <div class="grid-2col">
+        <div class="ledger-card" data-seal="${t('sealText')}" style="padding: 36px;">
+          <div style="font-size: 15px; font-weight: 700; color: var(--c-muted);">PROJECT CAPITAL SCALE</div>
+          <div id="sim-out-cost" style="font-size: 46px; font-family: var(--font-serif); color: var(--c-indigo); margin: 14px 0;">
+            ₹${store.projectCost.toLocaleString('en-IN')}
+          </div>
+
+          <input type="range" id="sim-range" min="50000" max="2500000" step="25000" value="${store.projectCost}" oninput="simUpdate(this.value)" style="width: 100%; height: 14px; accent-color: var(--c-turmeric);" />
+          <div style="display: flex; justify-content: space-between; font-size: 14.5px; color: var(--c-muted); margin-top: 10px;">
+            <span>₹50,000 (Mudra Shishu)</span>
+            <span>₹10,00,000 (Mudra Tarun)</span>
+            <span>₹25,00,000 (PMEGP)</span>
+          </div>
+
+          <div style="margin-top: 36px; display: flex; gap: 16px;">
+            <button class="btn-primary" style="flex: 1;" onclick="simApply()">Apply & Update Loan Plan →</button>
+            <button class="btn-secondary" onclick="navigate('/loan-plan')">Cancel</button>
+          </div>
+        </div>
+
+        <div class="ledger-card" data-seal="${t('sealText')}" style="background: #FAF8F5; display: flex; flex-direction: column; justify-content: space-between;">
+          <div>
+            <div style="font-size: 17px; font-weight: 700; color: var(--c-indigo); margin-bottom: 18px;">Breakdown (10% Minimum Margin)</div>
+            
+            <div style="background: #fff; padding: 18px; border: 1px solid var(--c-border); border-radius: 6px; margin-bottom: 14px;">
+              <div style="font-size: 14px; color: var(--c-muted);">Promoter Equity Required:</div>
+              <div id="sim-out-margin" style="font-size: 28px; font-weight: bold; color: var(--c-indigo);">₹${store.marginCapital.toLocaleString('en-IN')}</div>
+            </div>
+
+            <div style="background: #fff; padding: 18px; border: 1px solid var(--c-border); border-radius: 6px;">
+              <div style="font-size: 14px; color: var(--c-muted);">Eligible Credit Facilities:</div>
+              <div id="sim-out-loan" style="font-size: 28px; font-weight: bold; color: var(--c-green);">₹${(store.projectCost - store.marginCapital).toLocaleString('en-IN')}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    `;
+  },
+
+  "/schemes": () => `
+    <div class="desktop-page-head">
+      <div>
+        <h2 class="page-title">${t('navSchemes')}</h2>
+        <p class="page-sub">Click on any scheme card to review full guidelines, subsidy criteria, and verified statistics.</p>
+      </div>
+    </div>
+
+    <div class="grid-2col">
+      ${GOVT_DATA.schemes.map(s => `
+        <div class="ledger-card" data-seal="${t('sealText')}" style="margin-bottom: 18px; cursor: pointer; transition: transform 0.15s;" onclick="openSchemeDetails('${s.id}')">
+          <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+            <div style="font-size: 22px; font-weight: bold; color: var(--c-indigo);">${s.name}</div>
+            <span style="background: var(--c-turmeric-bg); color: var(--c-turmeric); font-size: 13px; font-weight: bold; padding: 3px 10px; border-radius: 4px;">
+              Max: ₹${s.maxLoan.toLocaleString('en-IN')}
+            </span>
+          </div>
+          <div style="font-size: 15px; font-weight: 600; color: var(--c-green); margin: 8px 0;">
+            Interest Range: ${s.rate} · Moratorium: ${s.moratorium}
+          </div>
+          <p style="font-size: 15px; color: var(--c-muted); margin-bottom: 12px;">${s.desc}</p>
+          
+          <div style="background: #FAF8F5; border: 1px dashed var(--c-border-strong); padding: 8px 12px; border-radius: 4px; font-size: 13.5px; display: flex; justify-content: space-between;">
+            <span>Total Sanctions: <strong>${s.stats.sanctions}</strong></span>
+            <span style="color: var(--c-indigo); font-weight: bold;">Click to View Brief & Statistics ➔</span>
+          </div>
+        </div>
+      `).join('')}
+    </div>
+  `,
+
+  "/nearest-branch": () => `
+    <div class="desktop-page-head">
+      <div>
+        <h2 class="page-title">${t('branchTitle')}</h2>
+        <p class="page-sub">${t('branchSub', store.locationMeta.district, store.pincode)}</p>
+      </div>
+      <button class="desktop-voice-bar" onclick="speakDesktopText('${t('branchTitle')}')">
+        ${t('readAloud')}
+      </button>
+    </div>
+
+    <div class="grid-3col">
+      <div class="ledger-card" data-seal="${t('sealText')}">
+        <div style="font-size: 21px; font-weight: 700; color: var(--c-indigo); margin-bottom: 8px;">
+          🏛️ Lead Bank Desk
+        </div>
+        <div style="font-size: 17px; font-weight: 600;">Bank of Baroda / SBI Main Branch</div>
+        <div style="font-size: 14.5px; color: var(--c-muted); margin-top: 6px;">District Lead Bank Office, Collectorate Road</div>
+      </div>
+
+      <div class="ledger-card" data-seal="${t('sealText')}">
+        <div style="font-size: 21px; font-weight: 700; color: var(--c-indigo); margin-bottom: 8px;">
+          💻 Digital Seva Kendra (CSC)
+        </div>
+        <div style="font-size: 17px; font-weight: 600;">Central CSC Assistance Center</div>
+        <div style="font-size: 14.5px; color: var(--c-muted); margin-top: 6px;">Tehsil Complex, Station Road</div>
+      </div>
+
+      <div class="ledger-card" data-seal="${t('sealText')}">
+        <div style="font-size: 21px; font-weight: 700; color: var(--c-indigo); margin-bottom: 8px;">
+          🎓 RSETI Training Hub
+        </div>
+        <div style="font-size: 17px; font-weight: 600;">${store.locationMeta.rseti}</div>
+        <div style="font-size: 14.5px; color: var(--c-muted); margin-top: 6px;">Free Residential EDP Certification</div>
+      </div>
+    </div>
+  `,
+
+  "/ask-disha": () => {
+    const isAssisted = store.operatorMode === 'assisted';
+
+    window.chatHistory = window.chatHistory || [
+      { 
+        sender: "bot", 
+        text: isAssisted
+          ? `Operator terminal active. Loaded with statutory guidelines for ${store.businessType} in ${store.locationMeta.district}. How can I assist with compliance or Jan Samarth upload procedures?`
+          : `Namaste! I am Disha, your AI business advisory assistant. I am grounded in your session data for ${store.businessType} in ${store.locationMeta.district} (${store.village}). What can I clarify for you?`
+      }
+    ];
+
+    window.postChat = (query) => {
+      if (!query) return;
+      window.chatHistory.push({ sender: "user", text: query });
+      renderChatUI();
+
+      setTimeout(() => {
+        const q = query.toLowerCase();
+        let ans = "";
+
+        if (q.includes("upload") || q.includes("portal") || q.includes("jan samarth")) {
+          ans = `For Jan Samarth online upload: Log in with Kiosk credentials, select 'Credit Linked Schemes', enter PIN ${store.pincode}, select ${store.selectedScheme.name}, and attach the scanned PDF docket.`;
+        } else if (q.includes("rejection") || q.includes("deficiency")) {
+          ans = `Top reasons for application return: 1. Address mismatch between identity proof and local trade license; 2. Margin money not deposited in borrower current account; 3. Missing self-declaration certificate for ${store.category} classification.`;
+        } else if (q.includes("moratorium") || q.includes("हप्ता") || q.includes("સવલત") || q.includes("விலக்கு")) {
+          ans = `Under your plan for ${store.selectedScheme.name}, you have a moratorium of ${store.selectedScheme.moratorium}. During this time, you only service interest charges—principal repayments are deferred.`;
+        } else if (q.includes("document") || q.includes("दस्तावेज़") || q.includes("દસ્તાવેજ") || q.includes("ஆவணம்")) {
+          ans = `For a ${store.category} entrepreneur applying for ${store.selectedScheme.name} in ${store.locationMeta.district}, mandatory documents are: Identity Proof (DigiLocker verified), Caste/Category Certificate, Udyam MSME Registration, and APMC/Quotation sheet.`;
+        } else if (q.includes("guarantor") || q.includes("गारंटर") || q.includes("ગેરેન્ટર") || q.includes("ஜாமீன்")) {
+          ans = `Under Reserve Bank of India priority sector lending circulars and CGTMSE regulations, loans up to ₹10 Lakhs under Mudra are collateral-free and do not require third-party guarantors.`;
+        } else {
+          ans = `For your ${store.businessType} project of ₹${store.projectCost.toLocaleString('en-IN')} in ${store.village}, the recommended route is ${store.selectedScheme.name}. You can proceed directly to the Lead Bank branch or your nearest CSC in ${store.locationMeta.district}.`;
+        }
+
+        window.chatHistory.push({ sender: "bot", text: ans });
+        renderChatUI();
+      }, 300);
+    };
+
+    window.handleChatSubmit = () => {
+      const el = document.getElementById('chat-input-desktop');
+      const val = el.value.trim();
+      if (val) {
+        postChat(val);
+        el.value = "";
+      }
+    };
+
+    window.voiceChatDesktop = () => {
+      const btn = document.getElementById('chat-mic-desktop');
+      btn.classList.add('listening');
+      listenDesktopSpeech((t) => {
+        postChat(t);
+      }, () => {
+        btn.classList.remove('listening');
+      });
+    };
+
+    function renderChatUI() {
+      const box = document.getElementById('chat-stream-desktop');
+      if (!box) return;
+      box.innerHTML = window.chatHistory.map(m => `
+        <div class="chat-bubble ${m.sender}">
+          ${m.text}
+        </div>
+      `).join('');
+      box.scrollTop = box.scrollHeight;
+    }
+
+    setTimeout(renderChatUI, 40);
+
+    return `
+      <div class="desktop-page-head">
+        <div>
+          <h2 class="page-title">${t('chatTitle')}</h2>
+          <p class="page-sub">${t('chatSub')}</p>
+        </div>
+      </div>
+
+      <div class="chat-layout">
+        <div class="chat-sidebar">
+          <div style="font-size: 15px; font-weight: 700; color: var(--c-indigo);">
+            ${isAssisted ? 'OPERATOR TOOLS' : 'COMMON QUESTIONS'}
+          </div>
+
+          ${isAssisted ? `
+            <div class="quick-chip" onclick="postChat('How to upload this docket on Jan Samarth portal?')">
+              📤 Jan Samarth upload procedure
+            </div>
+            <div class="quick-chip" onclick="postChat('What are the common rejection reasons by Lead Bank?')">
+              ⚠️ Common rejection reasons
+            </div>
+            <div class="quick-chip" onclick="postChat('What documents do I need to bring to the bank?')">
+              📑 Required documents checklist
+            </div>
+          ` : `
+            <div class="quick-chip" onclick="postChat('What does moratorium mean in my loan?')">
+              ❓ What is a moratorium?
+            </div>
+            <div class="quick-chip" onclick="postChat('What documents do I need to bring to the bank?')">
+              📑 Required documents checklist
+            </div>
+            <div class="quick-chip" onclick="postChat('Do I need collateral or a guarantor?')">
+              🛡️ Collateral & guarantor rules
+            </div>
+          `}
+
+          <div style="margin-top: auto; font-size: 13px; color: var(--c-muted); background: #fff; padding: 12px; border: 1px solid var(--c-border); border-radius: 4px;">
+            ${t('chatDisclaimer')}
+          </div>
+        </div>
+
+        <div class="chat-terminal">
+          <div class="chat-stream-desktop" id="chat-stream-desktop"></div>
+
+          <div style="padding: 18px; background: #fff; border-top: 1px solid var(--c-border); display: flex; gap: 12px;">
+            <input type="text" id="chat-input-desktop" class="text-input-lg" style="font-size: 17px; padding: 12px 16px;" placeholder="${t('chatPlaceholder')}" onkeydown="if(event.key==='Enter') handleChatSubmit()" />
+            <button id="chat-mic-desktop" class="btn-mic-desktop" onclick="voiceChatDesktop()">🎙️</button>
+            <button class="btn-primary" style="padding: 12px 28px;" onclick="handleChatSubmit()">${t('chatSend')}</button>
+          </div>
+        </div>
+      </div>
+    `;
+  }
+};
+
+// -------------------------------------------------------------
+// CORE CONTROLLER & LOCALIZATION SYNCHRONIZATION
+// -------------------------------------------------------------
+
+function renderGlobalStaticText() {
+  document.getElementById('hdr-title').innerText = t('portalTitle');
+  document.getElementById('hdr-sub').innerText = t('portalSub');
+  
+  const badgeEl = document.getElementById('hdr-badge');
+  if (store.operatorMode === 'assisted') {
+    badgeEl.innerText = t('portalBadgeAssisted');
+    badgeEl.classList.add('operator-active');
+  } else {
+    badgeEl.innerText = t('portalBadgeSelf');
+    badgeEl.classList.remove('operator-active');
+  }
+
+  document.getElementById('hdr-fs-btn').innerText = t('fsBtn');
+  document.getElementById('dnav-home').innerText = t('navHome');
+  document.getElementById('dnav-schemes').innerText = t('navSchemes');
+  document.getElementById('dnav-disha').innerText = t('navDisha');
+  document.getElementById('dnav-branch').innerText = t('navBranch');
+  document.getElementById('dnav-sim').innerText = t('navSim');
+
+  const langNames = {
+    en: "English",
+    hi: "हिंदी (Hindi)",
+    gu: "ગુજરાતી (Gujarati)",
+    mr: "मराठी (Marathi)",
+    ta: "தமிழ் (Tamil)",
+    bn: "বাংলা (Bengali)"
+  };
+  document.getElementById('current-lang-text').innerText = "Language: " + (langNames[store.lang] || "English");
+}
+
+function renderDesktopApp() {
+  stopDesktopSpeech();
+  const route = getRoute();
+  const main = document.getElementById('screen-viewport');
+  const stepper = document.getElementById('stepper-container');
+  const stepperFill = document.getElementById('stepper-fill');
+
+  renderGlobalStaticText();
+
+  const flow = ["/assisted", "/category", "/location", "/capital", "/business-type"];
+  const stepIdx = flow.indexOf(route);
+
+  if (stepIdx !== -1) {
+    stepper.style.display = "block";
+    stepperFill.style.width = (((stepIdx + 1) / flow.length) * 100) + "%";
+  } else {
+    stepper.style.display = "none";
+  }
+
+  document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+  if (route === '/') document.getElementById('dnav-home')?.classList.add('active');
+  if (route === '/schemes') document.getElementById('dnav-schemes')?.classList.add('active');
+  if (route === '/ask-disha') document.getElementById('dnav-disha')?.classList.add('active');
+  if (route === '/nearest-branch') document.getElementById('dnav-branch')?.classList.add('active');
+  if (route === '/simulator') document.getElementById('dnav-sim')?.classList.add('active');
+
+  const renderer = routes[route] || routes["/"];
+  main.innerHTML = renderer();
+}
+
+window.addEventListener('hashchange', renderDesktopApp);
+window.addEventListener('DOMContentLoaded', () => {
+  if (!window.location.hash) {
+    window.location.hash = "#/";
+  }
+  renderDesktopApp();
+});
+</script>
+</body>
+</html>
